@@ -1,24 +1,25 @@
 package com.playdata.moodMusicRecommend.member;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 @RequiredArgsConstructor
 @Service
 public class MemberService {
 
     private final MemberRepository repository;
-    public boolean login(String nickname, String passwd) {
-        return passwd.equals("@1234") && nickname.equals("spring");
-    }
+    private final PasswordEncoder passwordEncoder;
 
     public Member create(String nickname, String email, String passwd){
         Member member = new Member();
         member.setNickname(nickname);
         member.setEmail(email);
-
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
         member.setPasswd(passwordEncoder.encode(passwd)); //passwd 암호화
 
@@ -26,4 +27,8 @@ public class MemberService {
 
         return member;
     }
+
+    public void delete(User user) {
+        repository.deleteByNickname(user.getUsername());}
+
 }

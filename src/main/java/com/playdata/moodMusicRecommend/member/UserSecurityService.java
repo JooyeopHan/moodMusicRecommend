@@ -21,15 +21,12 @@ public class UserSecurityService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String nickname) throws UsernameNotFoundException{
-        System.out.println("nickname :" +nickname);
         Optional<Member> _siteUser = this.repository.findByNickname(nickname);
         if(_siteUser.isEmpty()){
-            System.out.println("사용자 못찾음");
             throw new UsernameNotFoundException("사용자를 찾을 수 없습니다.");
         }
 
         Member siteUser = _siteUser.get();
-        System.out.println("사용자 찾음 : "+ siteUser);
 
         List<GrantedAuthority> authorities = new ArrayList<>();
         if ("admin".equals(nickname)){
@@ -39,7 +36,6 @@ public class UserSecurityService implements UserDetailsService {
         }
 
         return new User(siteUser.getNickname(), siteUser.getPasswd(), authorities);
-
 
     }
 

@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <nav th:fragment="navbarFragment" class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/static">MoodMusicRecommend</a>
+    <a class="navbar-brand" href="/">MoodMusicRecommend</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -16,6 +16,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/member/signup}">회원가입</a>
+          <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/member/delete}">회원탈퇴</a>
         </li>
       </ul>
     </div>
