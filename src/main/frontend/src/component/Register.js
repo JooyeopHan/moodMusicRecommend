@@ -9,13 +9,16 @@ export default function Register(){
         e.preventDefault();
         console.log(e.target)
         fetch("/member/signup", {
+            headers : {"Content-Type":"application/json"},
             method: "POST",
             body: JSON.stringify({
-                email: "이메일",
-                password: "비밀번호",
+                nickname: "닉네임1",
+                password1: "1234",
+                password2: "1234",
+                email:"12341@naver.com"
             }),
         })
-            .then((response) => response.json())
+            .then((response) => console.log(response.json()))
             .then((result) => console.log(result));
     }
 

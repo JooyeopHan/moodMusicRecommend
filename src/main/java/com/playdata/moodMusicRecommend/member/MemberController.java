@@ -6,10 +6,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -38,28 +35,40 @@ public class MemberController {
 
     @PostMapping("/signup")
     @CrossOrigin(origins = "*")
-    public String signup(@Valid MemberCreateForm memberCreateForm, BindingResult bindingResult) {
-
+    @ResponseBody
+    public MemberCreateForm signup(@Valid @RequestBody MemberCreateForm memberCreateForm, BindingResult bindingResult) {
+        System.out.println(memberCreateForm.getNickname());
+        System.out.println(memberCreateForm.getPassword1());
+        System.out.println(bindingResult);
         if (bindingResult.hasErrors()) {
-            return "signup_page";
+//            return "signup_page";
+            return memberCreateForm;
+
         }
         if (!memberCreateForm.getPassword1().equals(memberCreateForm.getPassword2())) {
             bindingResult.rejectValue("password2", "passwordInCorrect", "2개의 패스워드가 일치하지 않습니다.");
-            return "signup_page";
+//            return "signup_page";
+            return memberCreateForm;
+
         }
         try{
             service.create(memberCreateForm.getNickname(), memberCreateForm.getEmail(), memberCreateForm.getPassword1());
         } catch (DataIntegrityViolationException e){
             e.printStackTrace();
             bindingResult.reject("signupFailed", "이미 등록된 사용자 입니다.");
-            return "signup_page";
+//            return "signup_page";
+            return memberCreateForm;
+
         }catch (Exception e){
             e.printStackTrace();
             bindingResult.reject("signupFailed", e.getMessage());
-            return "signup_page";
+//            return "signup_page";
+            return memberCreateForm;
+
         }
 
-        return "redirect:/";
+//        return "redirect:/";
+        return memberCreateForm;
     }
 
     @PostMapping("/delete")
