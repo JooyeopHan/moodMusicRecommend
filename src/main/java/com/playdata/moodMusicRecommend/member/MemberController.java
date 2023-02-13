@@ -6,6 +6,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +37,7 @@ public class MemberController {
 
 
     @PostMapping("/signup")
+    @CrossOrigin(origins = "*")
     public String signup(@Valid MemberCreateForm memberCreateForm, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {

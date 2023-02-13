@@ -23,7 +23,7 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception
     {
-        http.authorizeHttpRequests().requestMatchers(
+        http.cors().and().csrf().disable().authorizeHttpRequests().antMatchers("/**").permitAll().requestMatchers(
                 new AntPathRequestMatcher("/**")).permitAll()
                 .and()
                 .formLogin()
