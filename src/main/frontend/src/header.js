@@ -1,13 +1,88 @@
 import { useState } from "react";
 import { Button,Navbar,Offcanvas,Form,Container,Nav} from "react-bootstrap";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import qs from "qs";
+import {useCookies} from "react-cookie";
 
 function Header(){
 
     const [show, setShow] = useState(false);
+    const [username, setUsername] = useState('');
+    const [passwd, setPasswd] = useState('');
+    const [cookies, setCookie] = useCookies(['id'])
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const onUsernameHandler = (e) =>{
+        setUsername(e.target.value);
+    }
+    const onPasswdHandler = (e) =>{
+        setPasswd(e.target.value);
+    }
+    const responsebody ={
+        username:username,
+        passwd:passwd,
+    }
+
+    const axiosConfig = {
+        headers : {
+            "Content-Type" : "application/x-www-form-urlencoded"}
+    }
+
+    const axiosBody = {
+        username:username,
+        passwd:passwd
+    }
+
+
+
+    const onLoginHandler = (e) =>{
+        e.preventDefault();
+
+        console.log(e.target)
+        console.log(username)
+        console.log(passwd)
+        console.log(axiosBody)
+        axios.post("/member/login",
+            qs.stringify(axiosBody),
+            axiosConfig)
+            .then((response) => {
+                console.log(response.data);
+                window.alert(response.data.msg);
+                // setCookie('id', response.data.msg);
+            })
+            .catch((error) => {
+                alert('에러가 발생했습니다.');
+            });
+    }
+
+    const onDeleteHandler = (e) =>{
+        e.preventDefault();
+        axios.get("/member/logout")
+            .then(response =>{
+                console.log(response.data);
+                window.alert(response.data.msg);
+            })
+    }
+
+
+        // fetch("/member/login", {
+        //     headers : {"Content-Type":"x-www-form-urlencoded",
+        //                },
+        //     method: "POST",
+        //     redirect: "follow",
+        //     body: responsebody,
+        // }).then(response => response.json())
+        //     .then(data=>{
+        //         console.log(data);
+        //         window.alert(data.msg);
+        //         // window.location.href =data.url;
+        //     })
+
+
+
   
     return (
         <Navbar bg="light" expand="lg" style={{height :'15vh', textAlign: 'center', display: 'flex', alignItems:'center',boxShadow: '1px 1px 3px 1px #44194C'}}>
@@ -27,15 +102,15 @@ function Header(){
                 <Offcanvas.Title>로그인</Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>
-                <Form action={"/member/login"} method = "post">
+                <Form onSubmit={onLoginHandler}>
                     <fieldset>
                         <Form.Group className="mb-3">
-                            <Form.Label htmlFor="Id">아이디</Form.Label>
-                            <Form.Control id="Id" placeholder="아이디" />
+                            <Form.Label htmlFor="username">아이디</Form.Label>
+                            <Form.Control type ="text" onChange = {onUsernameHandler} id="username" value={username}  placeholder="아이디" />
                         </Form.Group>
                         <Form.Group className="mb-3">
-                            <Form.Label htmlFor="Pw">패스워드</Form.Label>
-                            <Form.Control id="Pw" placeholder="패스워드" />
+                            <Form.Label htmlFor="passwd">패스워드</Form.Label>
+                            <Form.Control type = "password" onChange = {onPasswdHandler} id="passwd" value={passwd} placeholder="패스워드" />
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Check
@@ -51,6 +126,10 @@ function Header(){
                         </Form.Group>
                     </fieldset>
                 </Form>
+                <Form onSubmit={onDeleteHandler} className="mb-3">
+                    <Button variant="secondary" size='lg' type="submit">로그아웃</Button>
+                </Form>
+
               </Offcanvas.Body>
             </Offcanvas>    
     </Navbar>);

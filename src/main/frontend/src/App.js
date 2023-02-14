@@ -7,21 +7,26 @@ import MusicList from './component/musicList';
 import Emotion from './component/emotion';
 import Register from './component/Register';
 import Test from './component/test';
+import {CookiesProvider} from "react-cookie";
+
 
 function App() {
   return (
       <div className="App" style={{height:'auto'}}>
-        <BrowserRouter>
-          <Header/>
-          <Routes>
-            <Route path='/' element={<Body />}/>
-            <Route path='/list' element={<MusicList />} />
-            <Route path='/emotion' element={<Emotion />} />
-            <Route path='/register' element={<Register />} />
-            <Route path='/test' element={<Test />} />
-          </Routes>
-          <Footer />
-        </BrowserRouter>
+        <CookiesProvider>
+            <BrowserRouter>
+                <Header/>
+                <Routes>
+                    <Route path='/' element={<Body />}/>
+                    <Route path='/list' element={<MusicList />} />
+                    <Route path='/emotion' element={<Emotion />} />
+                    <Route path='/register' element={<Register />} />
+                    <Route path='/test' element={<Test />} />
+                </Routes>
+                <Footer />
+            </BrowserRouter>
+        </CookiesProvider>
+
       </div>
   );
 }
