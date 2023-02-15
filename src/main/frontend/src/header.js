@@ -1,16 +1,17 @@
 import { useState } from "react";
-import { Button,Navbar,Offcanvas,Form,Container,Nav} from "react-bootstrap";
+import {Button, Navbar, Offcanvas, Form, Container, Nav, FormGroup} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import qs from "qs";
 import {useCookies} from "react-cookie";
+import {getCookie} from "react-use-cookie";
 
 function Header(){
 
     const [show, setShow] = useState(false);
     const [username, setUsername] = useState('');
     const [passwd, setPasswd] = useState('');
-    const [cookies, setCookie] = useCookies(['id'])
+    const [cookies, setCookie] = useCookies([])
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -20,10 +21,6 @@ function Header(){
     }
     const onPasswdHandler = (e) =>{
         setPasswd(e.target.value);
-    }
-    const responsebody ={
-        username:username,
-        passwd:passwd,
     }
 
     const axiosConfig = {
@@ -41,30 +38,48 @@ function Header(){
     const onLoginHandler = (e) =>{
         e.preventDefault();
 
-        console.log(e.target)
-        console.log(username)
-        console.log(passwd)
-        console.log(axiosBody)
         axios.post("/member/login",
             qs.stringify(axiosBody),
             axiosConfig)
             .then((response) => {
                 console.log(response.data);
-                window.alert(response.data.msg);
-                // setCookie('id', response.data.msg);
+                if (response.data.res){
+                    setCookie('id', "siteUser");
+                    window.location.href =response.data.url;
+                }
             })
             .catch((error) => {
-                alert('에러가 발생했습니다.');
+                alert('로그인 중 에러가 발생했습니다.');
             });
+    }
+
+    const onLogoutHandler = (e) =>{
+        e.preventDefault();
+        axios.post("/member/logout.do",
+            qs.stringify(axiosBody),
+            axiosConfig,)
+            .then((response) =>{
+                setCookie('id', "");
+                console.log(response.data);
+                window.location.href =response.data.url;
+            })
+            .catch((error) => {
+            window.alert('로그아웃 중 에러가 발생했습니다.');
+        });
     }
 
     const onDeleteHandler = (e) =>{
         e.preventDefault();
-        axios.get("/member/logout")
-            .then(response =>{
+        axios.post("/member/delete",
+            qs.stringify(axiosBody),
+            axiosConfig,)
+            .then((response) =>{
                 console.log(response.data);
-                window.alert(response.data.msg);
+                window.location.href =response.data.url;
             })
+            .catch((error) => {
+                window.alert('회원탈퇴 중 에러가 발생했습니다.');
+            });
     }
 
 
@@ -101,7 +116,8 @@ function Header(){
               <Offcanvas.Header closeButton>
                 <Offcanvas.Title>로그인</Offcanvas.Title>
               </Offcanvas.Header>
-              <Offcanvas.Body>
+            <Offcanvas.Body>
+              {(getCookie('id') != "siteUser") ?
                 <Form onSubmit={onLoginHandler}>
                     <fieldset>
                         <Form.Group className="mb-3">
@@ -122,13 +138,21 @@ function Header(){
                         <Form.Group className="d-flex flex-row gap-3 px-3 mt-lg-3" >
                             <Button variant="secondary" size='lg' type="submit">로그인</Button>
                             <Link to='/register'><Button variant="secondary" size='lg' type="submit" >회원가입</Button></Link>
+                        </Form.Group>
+                    </fieldset>
+                </Form>
+                  :
+                <Form className="mb-3">
+                    <fieldset>
+                        <Form.Group  className= "mb-3">
+                            <Button onClick={onLogoutHandler} variant="secondary" size='lg' type="submit">로그아웃</Button>
+                        </Form.Group>
+                        <Form.Group onClick={onDeleteHandler} className= "mb-3">
                             <Button variant="secondary" size='lg' type="submit">회원탈퇴</Button>
                         </Form.Group>
                     </fieldset>
                 </Form>
-                <Form onSubmit={onDeleteHandler} className="mb-3">
-                    <Button variant="secondary" size='lg' type="submit">로그아웃</Button>
-                </Form>
+              }
 
               </Offcanvas.Body>
             </Offcanvas>    

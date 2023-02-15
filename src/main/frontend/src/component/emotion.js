@@ -33,16 +33,22 @@ export default function Emotion(){
       console.log('rendering')
     },[])
 
+    const jsonConfig = {
+        headers : {
+            "Content-Type" : "application/json"}
+    }
+
     const SubmitHandler  = (e) => {
       e.preventDefault()
       console.log("start")
       const formData = new FormData();
       formData.append("files" , imgFile);
       formData.append("files" , imgFile1);
-      
-      axios.post("/detecting",formData).then(
+      console.log("form data : " + formData)
+      axios.post("/recommend/music",formData).then(
         (e) => {
-          console.log(e.json())
+          console.log(e.data)
+          window.alert(e.data.msg)
         }
       ).catch(function(error){
         if (error.response) {

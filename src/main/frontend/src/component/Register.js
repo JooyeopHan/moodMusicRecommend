@@ -43,7 +43,6 @@ export default function Register(){
             .then((response) => response.json()
             )
             .then(data => {
-                // console.log(response.url);
                 console.log(data);
                 window.alert(data.msg)
                 window.location.href =data.url;
