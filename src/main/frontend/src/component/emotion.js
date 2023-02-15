@@ -33,19 +33,20 @@ export default function Emotion(){
       console.log('rendering')
     },[])
 
-    const jsonConfig = {
+    const multipartConfig = {
         headers : {
-            "Content-Type" : "application/json"}
+            "Content-Type" : "multipart/form-data"}
     }
 
     const SubmitHandler  = (e) => {
       e.preventDefault()
       console.log("start")
       const formData = new FormData();
-      formData.append("files" , imgFile);
-      formData.append("files" , imgFile1);
-      console.log("form data : " + formData)
-      axios.post("/recommend/music",formData).then(
+      formData.append("imgBefore" , imgFile);
+      formData.append("imgAfter" , imgFile1);
+      console.log("form data : " + formData.get("imgBefore"))
+      console.log("form data : " + formData.get("imgAfter"))
+      axios.post("/recommend/music",formData,multipartConfig,).then(
         (e) => {
           console.log(e.data)
           window.alert(e.data.msg)

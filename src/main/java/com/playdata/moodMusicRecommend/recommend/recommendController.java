@@ -5,20 +5,23 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/recommend")
 public class recommendController {
 
     @PostMapping("/music")
-    public ResponseEntity<ResultDTO> music(@RequestBody HttpRequest request, MultipartFile image){
-        System.out.println("request" + request);
-        System.out.println("request URI" + request.getURI());
-        System.out.println("Multipart image " + image);
+    public ResponseEntity<ResultDTO> music(MultipartHttpServletRequest multipartHttpServletRequest){
+
+//        System.out.println("image before :" + files.get(0));
+//        System.out.println("image before :" + files.get(1));
+        System.out.println("Multipart image " + multipartHttpServletRequest.getParameter("imgBefore"));
+        System.out.println("Multipart image " + multipartHttpServletRequest.getParameter("imgAfter"));
         ResultDTO dto = new ResultDTO();
 
 
