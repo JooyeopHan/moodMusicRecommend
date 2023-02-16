@@ -1,15 +1,17 @@
-from flask import Flask,request,render_template
-import EmotionRecognition
+# from flask import Flask,request,render_template
+# -*- coding: utf-8 -*-
+
 import Spotify.spotify
+import EmotionRecognition
 import sortingInterface
 from DataAnaylsis import vaplane
 
-def detecting():
+def detecting(f1, f2):
     #이미지 파일 받고 저장
-    f1 = request.files["file1"]
-    f2 = request.files["file2"]
-    f1.save(f1.filename)
-    f2.save(f2.filename)
+#     f1 = request.files["file1"]
+#     f2 = request.files["file2"]
+#     f1.save(f1.filename)
+#     f2.save(f2.filename)
 
     #API 사용
     file = [f1.filename,f2.filename]
