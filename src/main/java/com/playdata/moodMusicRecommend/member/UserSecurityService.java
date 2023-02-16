@@ -27,15 +27,19 @@ public class UserSecurityService implements UserDetailsService {
         System.out.println("닉네임 : " +username);
         Optional<Member> _siteUser = this.repository.findByNickname(username);
         if(_siteUser.isEmpty()){
+            System.out.print("사용자를 찾을 수 없습니다.");
             throw new UsernameNotFoundException("사용자를 찾을 수 없습니다.");
         }
 
+        System.out.print("사용자를 찾았습니다.");
         Member siteUser = _siteUser.get();
 
         List<GrantedAuthority> authorities = new ArrayList<>();
         if ("admin".equals(username)){
+            System.out.print("admin게정입니다.");
             authorities.add(new SimpleGrantedAuthority(UserRole.ADMIN.getValue()));
         } else {
+            System.out.print("User계정입니다.");
             authorities.add(new SimpleGrantedAuthority(UserRole.USER.getValue()));
         }
 

@@ -27,19 +27,26 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception
     {
-        http.cors().and().csrf().disable().authorizeHttpRequests().antMatchers("/**").permitAll().requestMatchers(
-                new AntPathRequestMatcher("/**")).permitAll()
-                .and()
+        http.cors().and().csrf().disable().authorizeHttpRequests()
+//                .antMatchers("/**").permitAll()
+//                .requestMatchers(
+//                new AntPathRequestMatcher("/**")).permitAll()
+//                    .and()
+//                .authorizeRequests()
+                    .antMatchers("/emotion/**").authenticated()
+                    .anyRequest().permitAll()
+                    .and()
                 .formLogin()
-                .loginPage("/member/login")
-                .defaultSuccessUrl("/member/login")
-                .usernameParameter("username")
-                .passwordParameter("passwd")
-                .and()
+                    .loginPage("/member/login")
+                    .defaultSuccessUrl("/member/login")
+                    .failureUrl("/member/error")
+                    .usernameParameter("username")
+                    .passwordParameter("passwd")
+                    .and()
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
-                .logoutSuccessUrl("/member/logout")
-                .invalidateHttpSession(true);
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout.do"))
+                    .logoutSuccessUrl("/member/logout")
+                    .invalidateHttpSession(true);
 
         return http.build();
     }
