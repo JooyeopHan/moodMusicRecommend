@@ -93,7 +93,7 @@ public class RecommendController {
 
         } catch (UnsupportedEncodingException e)
         {
-            
+
             e.printStackTrace();
         } catch (IllegalStateException e) {
             e.printStackTrace();
