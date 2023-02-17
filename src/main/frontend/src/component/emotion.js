@@ -42,10 +42,10 @@ export default function Emotion(){
       e.preventDefault()
       console.log("start")
       const formData = new FormData();
-      formData.append("imgBefore" , imgFile);
-      formData.append("imgAfter" , imgFile1);
-      console.log("form data : " + formData.get("imgBefore"))
-      console.log("form data : " + formData.get("imgAfter"))
+      formData.append("file" , imgFile);
+      formData.append("file" , imgFile1);
+      console.log("form data : " + formData.get("file"))
+      console.log("form data : " + formData.get("file"))
       axios.post("/recommend/music",formData,multipartConfig,).then(
         (e) => {
           console.log(e.data)

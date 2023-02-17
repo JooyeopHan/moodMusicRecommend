@@ -1,2 +1,8 @@
-package com.playdata.moodMusicRecommend.recommend;public class recommendService {
+package com.playdata.moodMusicRecommend.recommend;
+
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class recommendService {
 }

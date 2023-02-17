@@ -10,7 +10,7 @@ def detecting():
     f2 = request.files["file2"]
     f1.save(f1.filename)
     f2.save(f2.filename)
-
+    print("hello.py")
     #API 사용
     file = [f1.filename,f2.filename]
     client = EmotionRecognition.initial()
