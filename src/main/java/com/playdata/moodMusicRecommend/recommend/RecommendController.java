@@ -77,7 +77,7 @@ public class RecommendController {
             System.out.println("resultlist.get(0)" + resultList.get(0));
             System.out.println("resultlist.get(1)" + resultList.get(1));
 
-            service.recommendMusic(resultList);
+//            service.recommendMusic(resultList);
 
 
         } catch (UnsupportedEncodingException e)
