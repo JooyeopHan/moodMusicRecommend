@@ -93,11 +93,11 @@ public class RecommendController {
 
         } catch (UnsupportedEncodingException e)
         {
-            
+            // TODO Auto-generated catch block
             e.printStackTrace();
-        } catch (IllegalStateException e) {
+        } catch (IllegalStateException e) { // TODO Auto-generated catch block
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch (IOException e) { // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

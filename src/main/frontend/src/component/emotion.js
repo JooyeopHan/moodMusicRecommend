@@ -7,16 +7,23 @@ import { Container,Button } from "react-bootstrap";
 export default function Emotion(){
     const [imgFile, setImgFile] = useState("");
     const [imgFile1, setImgFile1] = useState("");
+    const [file1, setFile1] = useState("");
+    const [file2, setFile2] = useState("");
     const imgRef = useRef();
     const imgRef1 = useRef();
     
     // 이미지 업로드 input의 onChange
     const saveImgFile = () => {
+
       const file = imgRef.current.files[0];
       const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = () => {
+            console.log("file" + file)
+            console.log("reader" + reader)
+            console.log("reader_result" + reader.result)
             setImgFile(reader.result);
+            setFile1(file);
         };
     };
 
@@ -26,6 +33,7 @@ export default function Emotion(){
         reader.readAsDataURL(file);
         reader.onloadend = () => {
             setImgFile1(reader.result);
+            setFile2(file);
         };
     };
 
@@ -42,10 +50,12 @@ export default function Emotion(){
       e.preventDefault()
       console.log("start")
       const formData = new FormData();
-      formData.append("file" , imgFile);
-      formData.append("file" , imgFile1);
-      console.log("form data : " + formData.get("file"))
-      console.log("form data : " + formData.get("file"))
+
+      formData.append("file1" , file1);
+      formData.append("file2" , file2);
+      console.log("form data : " + formData.get("file1"))
+      // console.log("form data : " + formData.get("imgAfter"))
+
       axios.post("/recommend/music",formData,multipartConfig,).then(
         (e) => {
           console.log(e.data)
@@ -94,6 +104,7 @@ export default function Emotion(){
                   type="file"
                   accept="image/*"
                   name='file1'
+                  multiple="multiple"
                   onChange={saveImgFile}
                   ref={imgRef}
               />
@@ -111,6 +122,7 @@ export default function Emotion(){
                   type="file"
                   accept="image/*"
                   name='file2'
+                  multiple="multiple"
                   onChange={saveImgFile1}
                   ref={imgRef1}
                 />
