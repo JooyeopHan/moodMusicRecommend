@@ -24,14 +24,7 @@ public class RecommendController {
 
     @PostMapping("/music")
     public ResponseEntity<ResultDTO> music(HttpServletRequest req) throws IOException {
-//
-//        System.out.println("Multipart image " + mhsr.getParameter("file"));
-//        System.out.println("Multipart image " + mhsr.getParameter("imgAfter"));
 
-//        MultiValueMap<String, MultipartFile> files = mhsr.getMultiFileMap();
-//        System.out.println("files :" + files);
-//        List<MultipartFile> fileMap = mhsr.getFiles("file");
-//        System.out.println("fileMap :" + fileMap);
 
         MultipartHttpServletRequest mhsr = (MultipartHttpServletRequest) req;
         String path = req.getSession().getServletContext().getRealPath("/resources");
@@ -75,14 +68,10 @@ public class RecommendController {
                 File serverFile = new File(path + File.separator + saveFileName);
                 mfile.transferTo(serverFile);
 
-//                Map file = new HashMap();
                 resultList.add(serverFile);
-//                resultList.add(file);
 
             }
 
-//            returnObject.put("files", resultList);
-//            returnObject.put("params", mhsr.getParameterMap());
 
             System.out.println("resultlist" + resultList.get(0));
             System.out.println("resultlist.get(0)" + resultList.get(0));
@@ -93,11 +82,11 @@ public class RecommendController {
 
         } catch (UnsupportedEncodingException e)
         {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
-        } catch (IllegalStateException e) { // TODO Auto-generated catch block
+        } catch (IllegalStateException e) {
             e.printStackTrace();
-        } catch (IOException e) { // TODO Auto-generated catch block
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
