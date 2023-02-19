@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emotion Detector</title>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
+</head>
+<body>
+  <main class="container">
+    <h1>emotion detector</h1>
+    <h3>결과</h3>
+    <table>
+      <th>artist</th>
+      <th>song name</th>
+      {% for result in results%}
+      <tr>
+        <td>{{result[0]}}</td>
+        <td>{{result[1]}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </main>
+</body>
+</html>
