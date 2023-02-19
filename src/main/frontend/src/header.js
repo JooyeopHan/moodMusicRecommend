@@ -1,17 +1,17 @@
-import { useState } from "react";
+import {useEffect, useLayoutEffect, useState} from "react";
 import {Button, Navbar, Offcanvas, Form, Container, Nav, FormGroup} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import qs from "qs";
-import {useCookies} from "react-cookie";
-import {getCookie} from "react-use-cookie";
+
 
 function Header(){
-
     const [show, setShow] = useState(false);
     const [username, setUsername] = useState('');
     const [passwd, setPasswd] = useState('');
-    const [cookies, setCookie] = useCookies([])
+    const [auth, setAuth] = useState("");
+    const [logIned, setLogIned] = useState(false);
+
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -33,6 +33,18 @@ function Header(){
         passwd:passwd
     }
 
+    useEffect(() => {
+        console.log('렌더링 완료')
+        axios.post("/member/auth",).then(
+            (response) => {
+                if ((response.data.auth ==="ROLE_USER") || (response.data.auth ==="ROLE_ADMIN")) {
+                    setLogIned(true)
+                }
+            }
+        ).catch(function(error){
+            console.log(error);
+        });
+    },[])
 
 
     const onLoginHandler = (e) =>{
@@ -44,12 +56,17 @@ function Header(){
             .then((response) => {
                 console.log(response.data);
                 if (response.data.res){
-                    setCookie('id', "siteUser");
+                    setAuth(response.data.auth);
+                    console.log("auth : " + auth)
                     window.location.href =response.data.url;
+                    window.alert(response.data.msg);
+                }
+                else{
+                    window.location.href =response.data.url;
+                    window.alert(response.data.msg);
                 }
             })
             .catch((error) => {
-                alert('로그인 중 에러가 발생했습니다.');
             });
     }
 
@@ -59,9 +76,8 @@ function Header(){
             qs.stringify(axiosBody),
             axiosConfig,)
             .then((response) =>{
-                setCookie('id', "");
-                console.log(response.data);
                 window.location.href =response.data.url;
+                window.alert(response.data.msg);
             })
             .catch((error) => {
             window.alert('로그아웃 중 에러가 발생했습니다.');
@@ -74,29 +90,12 @@ function Header(){
             qs.stringify(axiosBody),
             axiosConfig,)
             .then((response) =>{
-                console.log(response.data);
                 window.location.href =response.data.url;
             })
             .catch((error) => {
                 window.alert('회원탈퇴 중 에러가 발생했습니다.');
             });
     }
-
-
-        // fetch("/member/login", {
-        //     headers : {"Content-Type":"x-www-form-urlencoded",
-        //                },
-        //     method: "POST",
-        //     redirect: "follow",
-        //     body: responsebody,
-        // }).then(response => response.json())
-        //     .then(data=>{
-        //         console.log(data);
-        //         window.alert(data.msg);
-        //         // window.location.href =data.url;
-        //     })
-
-
 
   
     return (
@@ -117,7 +116,7 @@ function Header(){
                 <Offcanvas.Title>로그인</Offcanvas.Title>
               </Offcanvas.Header>
             <Offcanvas.Body>
-              {(getCookie('id') != "siteUser") ?
+              {!logIned ?
                 <Form onSubmit={onLoginHandler}>
                     <fieldset>
                         <Form.Group className="mb-3">

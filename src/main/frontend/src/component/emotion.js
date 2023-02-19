@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import {useEffect, useState, useRef} from "react";
+import {useLocation} from "react-router-dom";
 import { Container,Button } from "react-bootstrap";
 
 
@@ -11,7 +12,10 @@ export default function Emotion(){
     const [file2, setFile2] = useState("");
     const imgRef = useRef();
     const imgRef1 = useRef();
-    
+
+    const location = useLocation();
+
+
     // 이미지 업로드 input의 onChange
     const saveImgFile = () => {
 
@@ -38,7 +42,19 @@ export default function Emotion(){
     };
 
     useEffect(() => {
-      console.log('rendering')
+        axios.post("/member/auth",).then(
+            (response) => {
+                console.log(response.data)
+                console.log(response.data.auth)
+                let auth = response.data.auth;
+                if ((auth !=="ROLE_USER") && (auth !=="ROLE_ADMIN")){
+                    window.alert("로그인이 필요한 페이지입니다. 로그인하여 주세요.");
+                    window.location.href ="/"
+                }
+            }
+        ).catch(function(error){
+            // console.log(error.response.data);
+        });
     },[])
 
     const multipartConfig = {

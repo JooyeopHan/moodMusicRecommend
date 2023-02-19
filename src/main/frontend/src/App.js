@@ -8,6 +8,7 @@ import Emotion from './component/emotion';
 import Register from './component/Register';
 import Test from './component/test';
 import {CookiesProvider} from "react-cookie";
+import Profile from "./component/profile";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
                     <Route path='/emotion' element={<Emotion />} />
                     <Route path='/register' element={<Register />} />
                     <Route path='/test' element={<Test />} />
+                    <Route path='/profile' element={<Profile />} />
                 </Routes>
                 <Footer />
             </BrowserRouter>
