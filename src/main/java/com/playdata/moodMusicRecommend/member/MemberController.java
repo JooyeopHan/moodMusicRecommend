@@ -21,6 +21,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Objects;
+import java.util.Optional;
 
 
 @Controller
@@ -38,10 +39,6 @@ public class MemberController {
 
     @GetMapping("/login")
     public ResponseEntity<ResultDTO> login(@AuthenticationPrincipal User user, HttpSession session) {
-        System.out.println("session id" + session.getId());
-        System.out.println("user정보 제발 :" + user.getUsername());
-        System.out.println("user정보 제발 :" + user.getAuthorities());
-
 
         ResultDTO dto = new ResultDTO();
         dto.setMsg("로그인 성공하였습니다");
@@ -54,7 +51,6 @@ public class MemberController {
     @GetMapping("/logout")
     public ResponseEntity<ResultDTO> logout(@AuthenticationPrincipal User user, HttpSession session) {
         System.out.println("로그 아웃 시 session id" + session.getId());
-//        System.out.print("user정보 제발 :" + user.getUsername());
 
         ResultDTO dto = new ResultDTO();
         dto.setMsg("로그아웃 성공하였습니다");
@@ -149,9 +145,6 @@ public class MemberController {
     @PostMapping("/auth")
     @CrossOrigin(origins = "*")
     public ResponseEntity<ResultDTO> authentication(@AuthenticationPrincipal User user) {
-//        System.out.println("user 이름  :" + user.getUsername());
-//        System.out.println("user 권한  :" + user.getAuthorities().toString());
-//        System.out.println("user"+user);
         HttpHeaders headers = new HttpHeaders();
         ResultDTO dto = new ResultDTO();
         if(user==null) {
@@ -164,17 +157,28 @@ public class MemberController {
             System.out.println(user.getAuthorities().toString());
             if (auth.equals("[ROLE_USER]")){
                 dto.setAuth("ROLE_USER");
-                System.out.println("user");
             } else if (auth.equals("[ROLE_ADMIN]")) {
                 dto.setAuth("ROLE_ADMIN");
-                System.out.println("admin");
             }
         }
-
 
         dto.setRes(true);
 
         return ResponseEntity.accepted().headers(headers).body(dto);
+    }
 
+    @PostMapping("/profile")
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<?> showProfile(@AuthenticationPrincipal User user) {
+        HttpHeaders headers = new HttpHeaders();
+        String username = user.getUsername();
+
+        Optional<Member> profile = service.select(username);
+
+        profile.ifPresent(System.out::println);
+//        ResultDTO dto = new ResultDTO();
+//        dto.setRes(true);
+
+        return ResponseEntity.accepted().headers(headers).body(profile);
     }
 }

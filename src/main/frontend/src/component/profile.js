@@ -1,7 +1,23 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn, MDBTypography } from 'mdb-react-ui-kit';
+import axios from "axios";
 
 export default function Profile() {
+
+    const [profile, setProfile] = useState({"nickname" : "", "email" : ""});
+
+    useEffect(() => {
+        axios.post("/member/profile",)
+            .then((response) => {
+                console.log(response)
+                console.log(response.data.nickname)
+                setProfile(Object.entries(response.data));
+                }
+            ).catch(function(error){
+                // console.log(error.response.data);
+        });
+    },[])
+
     return (
         <div className="gradient-custom-2" style={{ backgroundColor: '#9de2ff' }}>
             <MDBContainer className="py-5 h-100">
@@ -17,8 +33,8 @@ export default function Profile() {
                                     </MDBBtn>
                                 </div>
                                 <div className="ms-3" style={{ marginTop: '130px' }}>
-                                    <MDBTypography tag="h5">Andy Horwitz</MDBTypography>
-                                    <MDBCardText>New York</MDBCardText>
+                                    <MDBTypography tag="h5"> {profile.nickname} </MDBTypography>
+                                    <MDBCardText> {profile.email}</MDBCardText>
                                 </div>
                             </div>
                             <div className="p-4 text-black" style={{ backgroundColor: '#f8f9fa' }}>

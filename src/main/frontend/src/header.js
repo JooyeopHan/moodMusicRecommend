@@ -97,11 +97,11 @@ function Header(){
             });
     }
 
-  
+
     return (
         <Navbar bg="light" expand="lg" style={{height :'15vh', textAlign: 'center', display: 'flex', alignItems:'center',boxShadow: '1px 1px 3px 1px #44194C'}}>
             <Container fluid style={{justifyContent:'around' }}>
-                <Navbar.Brand className="fw-bold" style={{color: 'black', fontSize: '1.5em' }} href="/">Music Recommandation</Navbar.Brand>
+                <Navbar.Brand className="fw-bold" style={{color: 'black', fontSize: '1.5em' }} href="/">Music Recommendation</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Nav className="me-auto">
                     <Link to="/" style={{fontSize: '1.1em', color: 'black', textDecoration: 'none'}}>Home</Link>
@@ -149,12 +149,13 @@ function Header(){
                         <Form.Group onClick={onDeleteHandler} className= "mb-3">
                             <Button variant="secondary" size='lg' type="submit">회원탈퇴</Button>
                         </Form.Group>
+                        <Button href="/profile" variant="secondary" size = "lg">회원 정보 </Button>
                     </fieldset>
                 </Form>
               }
 
               </Offcanvas.Body>
-            </Offcanvas>    
+            </Offcanvas>
     </Navbar>);
 }
 
