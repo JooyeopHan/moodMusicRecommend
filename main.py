@@ -4,7 +4,7 @@ import EmotionRecognition
 import Spotify.spotify
 import sortingInterface
 from DataAnaylsis import vaplane
-import pprint
+import base64
 
 
 app = Flask(__name__)
@@ -17,8 +17,16 @@ def detecting():
     # before_data = io.BytesIO(before_data)
     # before_data2 = base64.b64decode(before_data)
     print(1)
+    # print(before_data2)
+    # e = open('result.png', 'wb')
+
+    # e.write(before_data2)
+
+    # e.close()
     #API 사용
+
     file = [before_data,after_data]
+    # print(file)
     client = EmotionRecognition.initial()
     emotions_position = vaplane.MakePlane()
     # # 전/ 후 사진으로 추출된 벡터
@@ -29,10 +37,10 @@ def detecting():
     # print(pre_tracklist, type(pre_tracklist))
     # # 랜덤 추출된 50개의 곡 dataframe, column = ['artist_name','track_name','energy', 'valence']
     # print(pre_tracklist)
-    result = sortingInterface.sorting(pre_tracklist,result[0])
-    print(result)
+    resulted = sortingInterface.sorting(pre_tracklist,result[0])
+    end = {'list': resulted, 'result':[result[1],result[2]]}
     #result = 10개의 중복되지 않은 [[artist,name],...]
-    return result
+    return end
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=9000)

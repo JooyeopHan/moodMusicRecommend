@@ -5,7 +5,7 @@ import pprint
 def initial():
 
     #luxand api 객체 생성
-    client = luxand("ac2d5f607fd44077b690949b3893abfc")
+    client = luxand("6cece43375964761bb20396626437b2a")
     return client
 
 # comtempt+disgust 하기로 했다.
