@@ -11,7 +11,9 @@ export default function Profile() {
             .then((response) => {
                 console.log(response)
                 console.log(response.data.nickname)
-                setProfile(Object.entries(response.data));
+                setProfile((prevState) =>{
+                    return {...prevState, nickname : response.data.nickname, email : response.data.email}
+                });
                 }
             ).catch(function(error){
                 // console.log(error.response.data);

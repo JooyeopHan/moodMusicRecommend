@@ -1,0 +1,33 @@
+
+:root {
+    --pink : #ff74a4;
+    --violet : #9f6ea3;
+    --white : #fff;
+    --lightshadow : rgba(0,0,0,0.15);
+    --lightblack : #515c6f;
+    --pinkshadow : #ffcbdd;
+    --darkwhite : #cecaca;
+}
+
+.controller {
+    background: linear-gradient(90deg, var(--pink) 0%, var(--violet) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding: 0;
+}
+.controller i {
+    font-size: 70px;
+    user-select: none;
+    background: linear-gradient(90deg, var(--pink) 0%, var(--violet) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#myProgress {
+    width: 100%;
+    background-color: grey;
+}
+#myBar {
+    width: 1%;
+    height: 30px;
+    background-color: green;
+}
