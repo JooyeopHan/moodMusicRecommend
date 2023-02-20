@@ -7,6 +7,7 @@ import MusicList1 from './component/musicList1';
 import Emotion from './component/emotion';
 import Register from './component/Register';
 import {CookiesProvider} from "react-cookie";
+import Profile from "./component/profile";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
                     <Route path='/list' element={<MusicList1 />} />
                     <Route path='/emotion' element={<Emotion />} />
                     <Route path='/register' element={<Register />} />
+                    <Route path='/profile' element={<Profile />} />
                 </Routes>
                 <Footer />
             </BrowserRouter>

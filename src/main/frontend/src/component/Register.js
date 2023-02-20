@@ -51,7 +51,7 @@ export default function Register(){
     }
 
     return (
-    <Container fluid style={{backgroundColor:"#44194C", height:"150vh",display:'flex',alignItems: 'center'}}>
+    <Container fluid style={{background:'linear-gradient(#ff74a4 0%, #9f6ea3 100%)', height:"150vh",display:'flex',alignItems: 'center'}}>
         <Container className="bg-secondary" style={{borderRadius: '32px',width:'90%', display:'flex',justifyContent:'center',alignItems: 'center', height: '130vh'}}>
         <Form className="p-3" onSubmit={onSubmitHandler} style={{ width: '80%',height:'90%', backgroundColor: 'white',borderRadius: '32px'}}>
             <Form.Group className="mb-3 mt-4" id="nickname" >

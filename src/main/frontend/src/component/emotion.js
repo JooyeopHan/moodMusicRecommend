@@ -2,7 +2,6 @@ import axios from "axios";
 import React from "react";
 import {useEffect, useState, useRef} from "react";
 import { Container,Button } from "react-bootstrap";
-import {useNavigate} from "react-router-dom";
 
 
 export default function Emotion(){
@@ -12,7 +11,7 @@ export default function Emotion(){
     const [file2, setFile2] = useState("");
     const imgRef = useRef();
     const imgRef1 = useRef();
-    const navigate = useNavigate();
+
     
     // 이미지 업로드 input의 onChange
     const saveImgFile = () => {
@@ -40,7 +39,19 @@ export default function Emotion(){
     };
 
     useEffect(() => {
-      console.log('rendering')
+        axios.post("/member/auth",).then(
+            (response) => {
+                console.log(response.data)
+                console.log(response.data.auth)
+                let auth = response.data.auth;
+                if ((auth !=="ROLE_USER") && (auth !=="ROLE_ADMIN")){
+                    window.alert("로그인이 필요한 페이지입니다. 로그인하여 주세요.");
+                    window.location.href ="/"
+                }
+            }
+        ).catch(function(error){
+            // console.log(error.response.data);
+        });
     },[])
 
     const multipartConfig = {
@@ -91,7 +102,7 @@ export default function Emotion(){
 
 
     return (
-    <Container fluid  style={{backgroundColor:"#44194C", height:"auto", display:'flex', alignItems:'center'}}>
+    <Container fluid  style={{background:'linear-gradient(#ff74a4 0%, #9f6ea3 100%)', height:"auto", display:'flex', alignItems:'center'}}>
         <Container className="bg-secondary mt-lg-5 mb-lg-5" style={{borderRadius: '32px',width:'90%', display:'flex',flexDirection:'column', height: 'auto'}}>
           <h1 className="mx-auto"> emotion detecting </h1>
           <form onSubmit={SubmitHandler}>

@@ -34,7 +34,7 @@ function Body(){
           
 
     return(
-    <Container fluid style={{backgroundColor:"#44194C", height:'auto', marginBottom: '3rem'}}>
+    <Container fluid style={{background:'linear-gradient(#ff74a4 0%, #9f6ea3 100%)', height:'auto', marginBottom: '3rem'}}>
         <Container ref={ref} style={Contstyle}>
             <h1>안녕하세요</h1>
         </Container>

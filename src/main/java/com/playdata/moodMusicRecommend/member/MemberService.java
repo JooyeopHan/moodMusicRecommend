@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -24,6 +25,12 @@ public class MemberService {
         member.setPasswd(passwordEncoder.encode(passwd)); //passwd 암호화
 
         this.repository.save(member);
+
+        return member;
+    }
+
+    public Optional<Member> select(String nickname){
+        Optional<Member> member =  repository.findByNickname(nickname);
 
         return member;
     }
