@@ -9,13 +9,14 @@ export default function Profile() {
     useEffect(() => {
         axios.post("/member/profile",)
             .then((response) => {
-                console.log(response)
-                console.log(response.data.nickname)
-                console.log(Object.entries(response.data))
-                setProfile(Object.entries(response.data));
+                    console.log(response)
+                    console.log(response.data.nickname)
+                    setProfile((prevState) =>{
+                        return {...prevState, nickname : response.data.nickname, email : response.data.email}
+                    });
                 }
             ).catch(function(error){
-                // console.log(error.response.data);
+            // console.log(error.response.data);
         });
     },[])
 
@@ -27,7 +28,7 @@ export default function Profile() {
                         <MDBCard>
                             <div className="rounded-top text-white d-flex flex-row" style={{ backgroundColor: '#000', height: '200px' }}>
                                 <div className="ms-4 mt-5 d-flex flex-column" style={{ width: '150px' }}>
-                                    <MDBCardImage src="asset/blank.png"
+                                    <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
                                                   alt="Generic placeholder image" className="mt-4 mb-2 img-thumbnail" fluid style={{ width: '150px', zIndex: '1' }} />
                                     <MDBBtn outline color="dark" style={{height: '36px', overflow: 'visible'}}>
                                         Edit profile
@@ -65,7 +66,7 @@ export default function Profile() {
                                 </div>
                                 <div className="d-flex justify-content-between align-items-center mb-4">
                                     <MDBCardText className="lead fw-normal mb-0">Recent photos</MDBCardText>
-                                    <MDBCardText className="mb-0"><a href="#" className="text-muted">Show all</a></MDBCardText>
+                                    <MDBCardText className="mb-0"><a href="#!" className="text-muted">Show all</a></MDBCardText>
                                 </div>
                                 <MDBRow>
                                     <MDBCol className="mb-2">

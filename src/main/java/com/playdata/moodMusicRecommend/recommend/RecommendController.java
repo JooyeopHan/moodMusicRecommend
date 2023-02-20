@@ -6,6 +6,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.http.client.reactive.ClientHttpRequest;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -29,7 +31,7 @@ public class RecommendController {
 
     @PostMapping("/music")
     @ResponseBody
-    public String music(MultipartHttpServletRequest mhsr) throws IOException {
+    public String music(MultipartHttpServletRequest mhsr,@AuthenticationPrincipal User user) throws IOException {
         MultiValueMap<String,String> builder = new LinkedMultiValueMap<>();
         System.out.println(mhsr.getParameter("file1").substring(22));
 // decode base64 encoded image data

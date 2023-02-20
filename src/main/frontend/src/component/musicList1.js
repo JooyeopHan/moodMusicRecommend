@@ -1,7 +1,9 @@
-import {Accordion, Button, Collapse, Container, Table} from "react-bootstrap";
+import {Accordion, Button, Form, Container, Table, FormCheck} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {Helmet} from "react-helmet";
 import "./list.css";
+import axios from "axios";
+import qs from "qs";
 
 
 
@@ -13,6 +15,7 @@ export default function MusicList1(){
         alignItems: 'center'
     }
     const allMusic = JSON.parse(window.localStorage.getItem("music"));
+    const result = JSON.parse(window.localStorage.getItem("result"));
     console.log(allMusic)
 
 
@@ -20,6 +23,9 @@ export default function MusicList1(){
     const [current,setCurrent] = useState(0);
     const [music, setMusic] = useState(allMusic[0]);
     const [proup, setProup] = useState(0);
+    const [listMusic, setListMusic] = useState(new Set());
+    const [nickname, setNickname] = useState("");
+
     const changeVolume = (v) => {
         console.log(v)
         const new_v = (music.volume + v)/100;
@@ -65,12 +71,67 @@ export default function MusicList1(){
         console.log("use" + current);
     }, [current])
 
+    useEffect(() => {
+        axios.post("/member/profile",).then(
+            (response) => {
+                console.log(response.data)
+                console.log(response.data.nickname)
+                setNickname(response.data.nickname)
+            }
+        ).catch(function(error){
+            // console.log(error.response.data);
+        });
+    },[])
+
     const clickListener = (e) => {
         setplay(false);
         music.currentTime = 0;
         music.pause();
         clearInterval(proup);
         setCurrent(e.target.value);
+    }
+
+    const listClick = (e) => {
+
+        console.log(e.target.checked)
+        console.log(e.target.id)
+        if(e.target.checked){
+            listMusic.add(e.target.id)
+            setListMusic(listMusic)
+        }else if(!e.target.checked && listMusic.has(e.target.id)){
+            listMusic.delete(e.target.id)
+            setListMusic(listMusic)
+        }
+        console.log(nickname)
+        console.log(listMusic)
+        console.log(result)
+    }
+
+    const onSendHandler = (event) =>{
+        event.preventDefault();
+        let list = [];
+        listMusic.forEach((v,v1,set) => {
+            list.push(allMusic[v])
+        })
+        console.log(list);
+
+        const axiosBody ={
+            'result': result,
+            'list': list,
+            'nickname': nickname
+        }
+        axios.post("/recommend/list",
+            JSON.stringify(axiosBody),
+            {
+                headers : {
+            "Content-Type" : "application/json"}
+            }
+        )
+            .then((response) => {
+                console.log(response.data);
+                })
+            .catch((error) => {
+            });
     }
 
     const [volume, setVolume] = useState(50)
@@ -136,14 +197,13 @@ export default function MusicList1(){
                 </Container>
 
             </Container>
-
-
-            <Table hover className="mt-lg-5" style={{width:'80%', height:"60%"}}>
+            <Table hover className="mt-lg-5" style={{width:'80%', height:"70%"}}>
                 <thead>
                 <tr>
                     <th>#</th>
                     <th>artist</th>
                     <th>track name</th>
+                    <th>like</th>
                     <th>link</th>
                 </tr>
                 </thead>
@@ -154,11 +214,19 @@ export default function MusicList1(){
                             <td>{index+1}</td>
                             <td>{m.artist}</td>
                             <td>{m.track}</td>
+                            <td><input
+                                type="checkbox"
+                                id={`${index}`}
+                                onClick={listClick}
+                            /></td>
                             <td><Button value={`${index}`} onClick={clickListener}>#</Button></td>
                         </tr>);
                 })}
                 </tbody>
             </Table>
+                <Container fluid>
+                    <Button type='submit' onClick={onSendHandler}>submit</Button>
+                </Container>
         </Container>
     );
 }

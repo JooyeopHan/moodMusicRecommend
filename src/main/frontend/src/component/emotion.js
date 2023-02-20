@@ -72,9 +72,11 @@ export default function Emotion(){
       // console.log("form data : " + formData.get("imgAfter"))
       axios.post("/recommend/music",formData,multipartConfig,).then(
         (e) => {
-            const data = JSON.stringify(e.data);
+            const data = JSON.stringify(e.data.list);
+            const result = JSON.stringify(e.data.result);
             console.log(data);
             window.localStorage.setItem("music",data);
+            window.localStorage.setItem("result",result);
             window.location.href = "/list";
         })
           .catch(function(error){
