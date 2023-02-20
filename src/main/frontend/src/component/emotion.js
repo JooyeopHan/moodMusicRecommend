@@ -3,7 +3,8 @@ import React from "react";
 import {useEffect, useState, useRef} from "react";
 import {useLocation} from "react-router-dom";
 import { Container,Button } from "react-bootstrap";
-
+import { BarWave } from "react-cssfx-loading";
+import "../app.css"
 
 export default function Emotion(){
     const [imgFile, setImgFile] = useState("");
@@ -12,6 +13,7 @@ export default function Emotion(){
     const [file2, setFile2] = useState("");
     const imgRef = useRef();
     const imgRef1 = useRef();
+    const [isLoading, setIsLoading] = useState(false);
 
     const location = useLocation();
 
@@ -23,8 +25,6 @@ export default function Emotion(){
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = () => {
-            console.log("file" + file)
-            console.log("reader" + reader)
             console.log("reader_result" + reader.result)
             setImgFile(reader.result);
             setFile1(file);
@@ -62,9 +62,11 @@ export default function Emotion(){
             "Content-Type" : "multipart/form-data"}
     }
 
-    const SubmitHandler  = (e) => {
+    const SubmitHandler  =  async(e) => {
         e.preventDefault()
+
         console.log("start")
+        setIsLoading(true);
         const formData = new FormData();
 
         console.log(imgFile)
@@ -77,6 +79,7 @@ export default function Emotion(){
             (e) => {
                 const data = JSON.stringify(e.data);
                 console.log(data);
+                setIsLoading(false);
                 window.localStorage.setItem("music",data);
                 window.location.href = "/list";
             })
@@ -105,7 +108,14 @@ export default function Emotion(){
 
 
     return (
-        <Container fluid  style={{backgroundColor:"#44194C", height:"auto", display:'flex', alignItems:'center'}}>
+        <Container fluid  style={{backgroundColor:"#44194C", height:"auto", display:'flex', alignItems:'center'}}>{/* This is the modal that is hidden by default */}
+            <div style={{ display: isLoading ? 'flex' : 'none' }} className='modal'>
+                <div className='modal-content'>
+                    <div className='loader'></div>
+                    <div className='modal-text'>음악 추천 중입니다... 잠시만 기다려 주세요....</div>
+                </div>
+            </div>
+
             <Container className="bg-secondary mt-lg-5 mb-lg-5" style={{borderRadius: '32px',width:'90%', display:'flex',flexDirection:'column', height: 'auto'}}>
                 <h1 className="mx-auto"> emotion detecting </h1>
                 <form onSubmit={SubmitHandler}>
