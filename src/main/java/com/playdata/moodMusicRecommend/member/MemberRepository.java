@@ -11,4 +11,5 @@ public interface MemberRepository extends CrudRepository<Member, Long> {
     // 회원 탈퇴
     void deleteByNickname(String nickname);
 
+
 }

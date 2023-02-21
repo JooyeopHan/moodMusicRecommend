@@ -38,4 +38,7 @@ public class MemberService {
     public void delete(User user) {
         repository.deleteByNickname(user.getUsername());}
 
+    public void update(Member member){
+        this.repository.save(member);
+    }
 }

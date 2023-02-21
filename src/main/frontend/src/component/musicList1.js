@@ -126,8 +126,14 @@ export default function MusicList1(){
             }
         )
             .then((response) => {
-                console.log(response.data);
-                })
+                if (response.data.res) {
+                    const confirm = window.confirm(response.data.msg+'\nemotion 페이지로 이동하시겠습니까?');
+                    if(confirm){
+                        window.location.href = response.data.url;
+                    }else{
+                        window.history.go(0);
+                    }
+                }})
             .catch((error) => {
             });
     }
@@ -222,8 +228,8 @@ export default function MusicList1(){
                 })}
                 </tbody>
             </Table>
-                <Container fluid className='d-flex align-content-end'>
-                    <Button type='submit' onClick={onSendHandler}>submit</Button>
+                <Container fluid className='mb-lg-5' style={{width:'70%', display:"flex",flexDirection:'row-reverse'}}>
+                    <Button type='submit' onClick={onSendHandler}>저장하기</Button>
                 </Container>
         </Container>
     );

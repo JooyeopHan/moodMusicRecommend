@@ -49,7 +49,7 @@ public class RecommendController {
         builder.add("file1", file1Data);
         builder.add("file2", file2Data);
         Optional<Member> mem = memberRepository.findByNickname(user.getUsername());
-        mem.ifPresent(member -> builder.add("member", member));
+        mem.ifPresent(member ->  builder.add("member", member));
 
         WebClient client = WebClient.create();
 

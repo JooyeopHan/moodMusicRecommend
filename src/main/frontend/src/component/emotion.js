@@ -2,6 +2,8 @@ import axios from "axios";
 import React from "react";
 import {useEffect, useState, useRef} from "react";
 import { Container,Button } from "react-bootstrap";
+import { BarWave } from "react-cssfx-loading";
+import "../app.css"
 
 
 export default function Emotion(){
@@ -11,6 +13,7 @@ export default function Emotion(){
     const [file2, setFile2] = useState("");
     const imgRef = useRef();
     const imgRef1 = useRef();
+    const [isLoading, setIsLoading] = useState(false);
 
     
     // 이미지 업로드 input의 onChange
@@ -61,7 +64,8 @@ export default function Emotion(){
 
     const SubmitHandler  = (e) => {
       e.preventDefault()
-      console.log("start")
+      console.log("start");
+      setIsLoading(true);
       const formData = new FormData();
 
         console.log(imgFile)
@@ -75,6 +79,7 @@ export default function Emotion(){
             const data = JSON.stringify(e.data.list);
             const result = JSON.stringify(e.data.result);
             console.log(data);
+            setIsLoading(false);
             window.localStorage.setItem("music",data);
             window.localStorage.setItem("result",result);
             window.location.href = "/list";
@@ -105,8 +110,16 @@ export default function Emotion(){
 
     return (
     <Container fluid  style={{background:'linear-gradient(#ff74a4 0%, #9f6ea3 100%)', height:"auto", display:'flex', alignItems:'center'}}>
+        <div style={{ display: isLoading ? 'flex' : 'none' }} className='modal'>
+            <div className='modal-content'>
+                <div className='loader'></div>
+                <div className='modal-text'>음악 추천 중입니다... 잠시만 기다려 주세요....</div>
+            </div>
+        </div>
+
+
         <Container className="bg-secondary mt-lg-5 mb-lg-5" style={{borderRadius: '32px',width:'90%', display:'flex',flexDirection:'column', height: 'auto'}}>
-          <h1 className="mx-auto"> emotion detecting </h1>
+          <h1 className="mx-auto mt-lg-3"> emotion detecting </h1>
           <form onSubmit={SubmitHandler}>
             <Container fluid className="d-flex">
             <Container className=" mx-auto mt-5 d-flex flex-column" style={{width:'45%', height:'45%'}}>  

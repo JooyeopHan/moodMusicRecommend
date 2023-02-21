@@ -23,8 +23,6 @@ public class UserSecurityService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
-        System.out.println("loadUserByUsername 접속 성공");
-        System.out.println("닉네임 : " +username);
         Optional<Member> _siteUser = this.repository.findByNickname(username);
         if(_siteUser.isEmpty()){
             System.out.print("사용자를 찾을 수 없습니다.");
