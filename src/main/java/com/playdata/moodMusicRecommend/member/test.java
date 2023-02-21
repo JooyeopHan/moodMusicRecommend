@@ -1,5 +1,7 @@
 package com.playdata.moodMusicRecommend.member;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,9 +13,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class test {
 
     @PostMapping("/list")
-    public void test(@RequestBody testVO model){
-        System.out.println(model.getNickname());
-        System.out.println(model.getList());
-        System.out.println(model.getResult());
+    public void test(@RequestBody String test){
+        JSONObject job = new JSONObject(test);
+        JSONArray list = job.getJSONArray("list");
+        JSONArray result = job.getJSONArray("result");
+        String nickname = job.getString("nickname");
+        Double[] means = new Double[2];
+        double result_valence = 0;
+        double result_arousal = 0;
+        System.out.println(list);
+        System.out.println(result);
+        System.out.println(nickname);
+        for(int i = 0; i<list.length();i++){
+            JSONObject obj = list.getJSONObject(i);
+            double valence = obj.getDouble("valence");
+            double arousal = obj.getDouble("arousal");
+            result_valence += valence;
+            result_arousal += arousal;
+        }
+        result_valence /= list.length();
+        result_arousal /= list.length();
+        means[0] = Math.round(result_valence*10000)/10000.0;
+        means[1] = Math.round(result_arousal*10000)/10000.0;
+        System.out.println(means[0]);
+        System.out.println(means[1]);
     }
 }

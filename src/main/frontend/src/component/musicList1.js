@@ -39,17 +39,15 @@ export default function MusicList1(){
         console.log("play"+current);
 
         music.play();
-
-        setProup(setInterval(() => {
-            console.log("current time ", music.currentTime);
-            // console.log("max duration: ", music.duration);
-            // 퍼센트 -> 현재시간 / 전체시간 * 100
-            let current_progress = music.currentTime / music.duration * 100;
-            // 진행바에 퍼센트 업데이트 쳐준다
-            document.getElementById('myBar').style.width = current_progress + '%';
-
-            // console.log("current progress ", current_progress);
-        }, 100));
+            setProup(setInterval(() => {
+                console.log("current time ", music.currentTime);
+                // console.log("max duration: ", music.duration);
+                // 퍼센트 -> 현재시간 / 전체시간 * 100
+                let current_progress = music.currentTime / music.duration * 100;
+                // 진행바에 퍼센트 업데이트 쳐준다
+                document.getElementById('myBar').style.width = current_progress + '%';
+                // console.log("current progress ", current_progress);
+            }, 50));
     }
 
     const stopping = () => {
