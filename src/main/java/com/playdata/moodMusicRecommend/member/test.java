@@ -14,6 +14,9 @@ public class test {
 
     @PostMapping("/list")
     public void test(@RequestBody String test){
+        // DB에서 user 감정 셋을 끌어옴
+
+
         JSONObject job = new JSONObject(test);
         JSONArray list = job.getJSONArray("list");
         JSONArray result = job.getJSONArray("result");
@@ -33,6 +36,8 @@ public class test {
         }
         result_valence /= list.length();
         result_arousal /= list.length();
+
+        //happiness 일때 좋아요를 누른 곡의 평균
         means[0] = Math.round(result_valence*10000)/10000.0;
         means[1] = Math.round(result_arousal*10000)/10000.0;
         System.out.println(means[0]);
