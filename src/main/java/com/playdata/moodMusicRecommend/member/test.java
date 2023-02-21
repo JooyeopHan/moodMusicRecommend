@@ -42,5 +42,9 @@ public class test {
         means[1] = Math.round(result_arousal*10000)/10000.0;
         System.out.println(means[0]);
         System.out.println(means[1]);
+
+        // DB 에 보낸다.
+
+
     }
 }

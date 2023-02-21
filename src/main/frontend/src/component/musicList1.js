@@ -222,7 +222,7 @@ export default function MusicList1(){
                 })}
                 </tbody>
             </Table>
-                <Container fluid>
+                <Container fluid className='d-flex align-content-end'>
                     <Button type='submit' onClick={onSendHandler}>submit</Button>
                 </Container>
         </Container>
