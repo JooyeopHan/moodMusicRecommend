@@ -20,9 +20,9 @@ def sorting(pre_tracklist,result):
         pre_resulting.append(pre.tolist())
     # print(resulting)
     for v in pre_resulting:
-        if v[:6] not in abstracting:
+        if v[:2] not in abstracting:
             resulting.append(v)
-            abstracting.append(v[:-1])
+            abstracting.append(v[:2])
     # 3. 거리 기반 정렬(내림차순)
     resulting = sorted(resulting, key=lambda x:x[-1])
     set_result = []

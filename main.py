@@ -34,7 +34,7 @@ def detecting():
     # print(file)
 
 
-    client = EmotionRecognition.initial()
+    # client = EmotionRecognition.initial()
     # emotions_position = vaplane.MakePlane()
     # print(emotions_position)
 
@@ -42,8 +42,8 @@ def detecting():
     # # 전/ 후 사진으로 추출된 벡터
     result = EmotionRecognition.emotioning(file,client,plane)
     # print(result)
-    sp = Spotify.spotify.initial()
-    pre_tracklist = Spotify.spotify.spotifing(sp)
+    # sp = Spotify.spotify.initial()
+    # pre_tracklist = Spotify.spotify.spotifing(sp)
 
 
     # print(pre_tracklist, type(pre_tracklist))
@@ -57,4 +57,8 @@ def detecting():
     return end
 
 if __name__ == '__main__':
+    sp = Spotify.spotify.initial()
+    pre_tracklist = Spotify.spotify.spotifing(sp)
+    print(pre_tracklist)
+    client = EmotionRecognition.initial()
     app.run(host='0.0.0.0', port=9000)

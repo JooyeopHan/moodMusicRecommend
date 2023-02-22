@@ -20,17 +20,20 @@ def spotifing(sp):
     music_preview = []
     popularity = []
     track_id = []
+    track = []
 
-    # for i in range(0,5,1):
-    track_results = sp.search(q='year:2022', type='track', limit=50, market='KR')
+    for i in range(0,20,1):
+        track_results = sp.search(q='year:2022', type='track',offset=i*50, limit=50, market='KR')
+        track.append(track_results)
 
-    for t in track_results['tracks']['items']:
-        artist_name.append(t['artists'][0]['name'])
-        music_preview.append(t['preview_url'])
-        image_url.append(t['album']['images'][0]['url'])
-        track_name.append(t['name'])
-        track_id.append(t['id'])
-        popularity.append(t['popularity'])
+    for track_results in track:
+        for t in track_results['tracks']['items']:
+            artist_name.append(t['artists'][0]['name'])
+            music_preview.append(t['preview_url'])
+            image_url.append(t['album']['images'][0]['url'])
+            track_name.append(t['name'])
+            track_id.append(t['id'])
+            popularity.append(t['popularity'])
 
     track_dataframe = pd.DataFrame({'artist_name' : artist_name, 'track_name' : track_name, 'track_id' : track_id, 'popularity' : popularity,"music_preview":music_preview,'image_url':image_url})
 
