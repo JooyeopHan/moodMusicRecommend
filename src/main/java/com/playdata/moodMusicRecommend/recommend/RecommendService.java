@@ -1,6 +1,7 @@
 package com.playdata.moodMusicRecommend.recommend;
 
 
+import com.playdata.moodMusicRecommend.member.Member;
 import lombok.RequiredArgsConstructor;
 import org.python.core.PyFunction;
 import org.python.core.PyInteger;
@@ -84,14 +85,23 @@ public class RecommendService {
             recommend.setValence((Double)music.get("valence"));
             recommend.setUsername(likeList.get("nickname").toString());
             recommend.setEmotion(emotion.get(1).toString());
+            recommend.setEmotionBefore(emotion.get(0).toString());
             recommend.setAudio(music.get("audio").toString());
             recommend.setTime(formatedNow);
+            recommend.setMusicName(music.get("track").toString());
+            recommend.setArtist(music.get("artis").toString());
 
             this.repository.save(recommend);
         }
 
 
         return "done";
+    }
+
+    public List<Recommend> select(String username){
+        List<Recommend> musicList =  repository.findByUsername(username);
+
+        return musicList;
     }
 
 

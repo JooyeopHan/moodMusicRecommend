@@ -4,21 +4,17 @@ import com.playdata.moodMusicRecommend.ResultDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Objects;
 import java.util.Optional;
@@ -28,7 +24,7 @@ import java.util.Optional;
 @RequestMapping(value = "/member")
 public class MemberController {
     @Autowired
-    MemberService service;
+    MemberService memberService;
 
 
     @GetMapping("/signup")
@@ -102,7 +98,7 @@ public class MemberController {
 
         }
         try {
-            service.create(memberCreateForm.getNickname(), memberCreateForm.getEmail(), memberCreateForm.getPassword1());
+            memberService.create(memberCreateForm.getNickname(), memberCreateForm.getEmail(), memberCreateForm.getPassword1());
         } catch (DataIntegrityViolationException e) { // 이미 등록된 사용자 일시
             e.printStackTrace();
             bindingResult.rejectValue("nickname","signupFailed", "이미 등록된 사용자 입니다.");
@@ -131,7 +127,7 @@ public class MemberController {
         ResultDTO dto = new ResultDTO();
         System.out.println("로그인한 멤버 아이디 : " + user.getUsername());
         HttpHeaders headers = new HttpHeaders();
-        service.delete(user);
+        memberService.delete(user);
 
         SecurityContextHolder.clearContext(); // 유저 로그아웃
         dto.setMsg("회원탈퇴를 성공적으로 하였습니다.");
@@ -173,7 +169,7 @@ public class MemberController {
         HttpHeaders headers = new HttpHeaders();
         String username = user.getUsername();
 
-        Optional<Member> profile = service.select(username);
+        Optional<Member> profile = memberService.select(username);
 
         profile.ifPresent(System.out::println);
 //        ResultDTO dto = new ResultDTO();

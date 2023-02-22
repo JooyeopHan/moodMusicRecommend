@@ -87,4 +87,18 @@ public class RecommendController {
         return ResponseEntity.accepted().headers(headers).body(dto);
     }
 
+    @PostMapping("/profile")
+    @CrossOrigin(origins = "*")
+    @ResponseBody
+    public ResponseEntity<?> showUserMusicList(@AuthenticationPrincipal User user) {
+        HttpHeaders headers = new HttpHeaders();
+        String username = user.getUsername();
+
+        List<Recommend> musicList = recommendService.select(username);
+
+        System.out.println("musicList" +musicList);
+
+        return ResponseEntity.accepted().headers(headers).body(musicList);
+    }
+
 }

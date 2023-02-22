@@ -5,6 +5,7 @@ import axios from "axios";
 export default function Profile() {
 
     const [profile, setProfile] = useState({"nickname" : "", "email" : ""});
+    const [musicList, setMusicList] = useState([]);
 
     useEffect(() => {
         axios.post("/member/profile",)
@@ -17,6 +18,23 @@ export default function Profile() {
                 }
             ).catch(function(error){
                 // console.log(error.response.data);
+        });
+        axios.post("/recommend/profile",)
+            .then((response) => {
+                    console.log("recommend response : " +response)
+                    console.log("recommend response11 : " +JSON.stringify(response.data))
+                    // setMusicList(prevState =>{
+                    //     return [...prevState,response]});
+                    const musicString = JSON.stringify(response.data);
+                    // const result = Object.keys(musicString).map( (key)=> {
+                    //     return [key, musicString[key]];
+                // });
+                    setMusicList(musicString.map((d) => <li key={d.name}>{d.name}</li>));
+                    // console.log("result : " + listItems)
+
+                }
+            ).catch(function(error){
+            // console.log(error.response.data);
         });
     },[])
 
@@ -59,7 +77,7 @@ export default function Profile() {
                                 <div className="mb-5">
                                     <p className="lead fw-normal mb-1">About</p>
                                     <div className="p-4" style={{ backgroundColor: '#f8f9fa' }}>
-                                        <MDBCardText className="font-italic mb-1">Web Developer</MDBCardText>
+                                        <MDBCardText className="font-italic mb-1">{musicList}</MDBCardText>
                                         <MDBCardText className="font-italic mb-1">Lives in New York</MDBCardText>
                                         <MDBCardText className="font-italic mb-0">Photographer</MDBCardText>
                                     </div>
