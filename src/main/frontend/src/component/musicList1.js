@@ -166,7 +166,7 @@ export default function MusicList1(){
                         height: "50%"
                     }}>
                         <div className="mt-lg-4" style={{
-                            fontSize: "3em"
+                            fontSize: "3em", overflow:'scroll'
                         }}>{allMusic[current].track}</div>
                         <p className="mt-3" style={{
                             fontSize: "1.5em"
