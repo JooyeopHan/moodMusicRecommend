@@ -89,7 +89,6 @@ public class RecommendController {
 
     @PostMapping("/profile")
     @CrossOrigin(origins = "*")
-    @ResponseBody
     public ResponseEntity<?> showUserMusicList(@AuthenticationPrincipal User user) {
         HttpHeaders headers = new HttpHeaders();
         String username = user.getUsername();

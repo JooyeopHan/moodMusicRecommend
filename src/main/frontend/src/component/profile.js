@@ -21,17 +21,15 @@ export default function Profile() {
         });
         axios.post("/recommend/profile",)
             .then((response) => {
-                    console.log("recommend response : " +response)
-                    console.log("recommend response11 : " +JSON.stringify(response.data))
-                    // setMusicList(prevState =>{
-                    //     return [...prevState,response]});
-                    const musicString = JSON.stringify(response.data);
-                    // const result = Object.keys(musicString).map( (key)=> {
-                    //     return [key, musicString[key]];
-                // });
-                    setMusicList(musicString.map((d) => <li key={d.name}>{d.name}</li>));
-                    // console.log("result : " + listItems)
+                console.log("recommend response : " +response.data)
+                console.log("recommend response1 : " +JSON.stringify(response.data))
+                console.log("recommend response11 : " +JSON.parse(JSON.stringify(response.data)))
+                console.log("recommend response111 : " +JSON.parse(JSON.stringify(response.data)[0]))
+                // setMusicList(prevState =>{
+                //     return [...prevState,response]});
+                const musicString = JSON.parse(JSON.stringify(response.data));
 
+                // setMusicList([...musicList, ...musicString]);
                 }
             ).catch(function(error){
             // console.log(error.response.data);
