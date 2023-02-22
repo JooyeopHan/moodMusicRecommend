@@ -11,7 +11,7 @@ def sorting(pre_tracklist,result):
     for i in range(len(pre_tracklist)):
         pre = np.array([])
         before = pre_tracklist.iloc[i,-2:].to_numpy().astype(np.float64)
-        after = 2*(before-0.5) - result
+        after = 2*(before-0.5) - result/2
         # print(after)
         after = np.power(after,2).sum()
         # print(after)

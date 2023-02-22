@@ -11,6 +11,7 @@ def initial():
     secret = '44784889fb534057887a3660f796c13a'
     client_credentials_manager = SpotifyClientCredentials(client_id=cid, client_secret=secret)
     sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+
     return sp
 
 def spotifing(sp):
@@ -25,6 +26,7 @@ def spotifing(sp):
     for i in range(0,20,1):
         track_results = sp.search(q='year:2022', type='track',offset=i*50, limit=50, market='KR')
         track.append(track_results)
+
 
     for track_results in track:
         for t in track_results['tracks']['items']:
@@ -49,3 +51,8 @@ def spotifing(sp):
             feature_dataframe = feature_dataframe.append(feat, ignore_index=True)
     result = pd.concat([track_dataframe,feature_dataframe], axis = 1)
     return result.loc[:,['artist_name','track_name','music_preview','image_url','energy', 'valence']]
+
+# sp = initial()
+# print(spotifing(sp))
+# a = sp.recommendation_genre_seeds()
+# pprint.pprint(a)
