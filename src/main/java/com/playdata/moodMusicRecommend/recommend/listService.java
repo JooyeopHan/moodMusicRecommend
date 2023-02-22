@@ -1,24 +1,18 @@
-package com.playdata.moodMusicRecommend.member;
+package com.playdata.moodMusicRecommend.recommend;
 
-import com.playdata.moodMusicRecommend.ResultDTO;
+import com.playdata.moodMusicRecommend.member.Member;
+import com.playdata.moodMusicRecommend.member.MemberRepository;
+import com.playdata.moodMusicRecommend.member.MemberService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Controller
-@RequestMapping("/recommend")
-public class test {
+@Service
+public class listService {
 
     @Autowired
     MemberRepository memberRepository;
@@ -26,14 +20,8 @@ public class test {
     @Autowired
     MemberService service;
 
-    @PostMapping("/list")
-    public ResponseEntity<ResultDTO> testing(@RequestBody String test,@AuthenticationPrincipal User user){
+    public boolean testing(String test,User user){
 
-        ResultDTO dto = new ResultDTO();
-        HttpHeaders headers = new HttpHeaders();
-        dto.setMsg("성공적으로 저장되었습니다.");
-        dto.setRes(false);
-        dto.setUrl("/emotion");
         Member presentUser;
         //post JSON.stringfy -> string { 'arousal': } -> '{ \'arousal\' : } <- string
         // request parsing
@@ -136,9 +124,6 @@ public class test {
                 break;
         }
         service.update(presentUser);
-        System.out.println(presentUser.getHappinessV());
-
-        dto.setRes(true);
-        return ResponseEntity.accepted().headers(headers).body(dto);
+        return true;
     }
 }

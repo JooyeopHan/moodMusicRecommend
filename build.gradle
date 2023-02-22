@@ -36,6 +36,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'io.netty:netty-resolver-dns-native-macos:4.1.79.Final:osx-aarch_64'
 	implementation 'org.json:json:20190722'
+	implementation group: 'org.python', name: 'jython-standalone', version: '2.7.2'
 
 }
 
