@@ -151,8 +151,13 @@ export default function MusicList1(){
                 <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
             </Helmet>
-
-            <Container fluid className="bg-white mt-lg-5" style={{display:'flex',flexDirection:'row',height: "28%", width:'70%', borderRadius: '32px', boxShadow: '0 6px 15px rgba(0,0,0,0.15)'}}>
+            <Container fluid className="bg-white mt-lg-5" style={{height: "8%", width:'60%', borderRadius: '32px', boxShadow: '0 6px 15px rgba(0,0,0,0.15)'}}>
+                <div className="mt-lg-4" style={{
+                    margin:'auto',
+                    fontSize: "2.5em", overflow:'scroll'
+                }}>{result[0]}-> {result[1]}</div>
+            </Container>
+            <Container fluid className="bg-white mt-lg-3" style={{display:'flex',flexDirection:'row',height: "28%", width:'70%', borderRadius: '32px', boxShadow: '0 6px 15px rgba(0,0,0,0.15)'}}>
                 <img src={allMusic[current].img ? allMusic[current].img : "asset/blank.png"} className="m-4 my-auto" style={{
                     height: "40vh",
                     width: "40vw",
@@ -166,7 +171,7 @@ export default function MusicList1(){
                         height: "50%"
                     }}>
                         <div className="mt-lg-4" style={{
-                            fontSize: "3em", overflow:'scroll'
+                            fontSize: "2em", overflow:'scroll'
                         }}>{allMusic[current].track}</div>
                         <p className="mt-3" style={{
                             fontSize: "1.5em"
