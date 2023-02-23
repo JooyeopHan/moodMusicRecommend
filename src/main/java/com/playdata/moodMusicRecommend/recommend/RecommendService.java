@@ -89,7 +89,7 @@ public class RecommendService {
             recommend.setAudio(music.get("audio").toString());
             recommend.setTime(formatedNow);
             recommend.setMusicName(music.get("track").toString());
-            recommend.setArtist(music.get("artis").toString());
+            recommend.setArtist(music.get("artist").toString());
 
             this.repository.save(recommend);
         }
