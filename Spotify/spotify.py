@@ -1,6 +1,7 @@
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import pandas as pd
+import matplotlib.pyplot as plt
 import pprint
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
@@ -50,9 +51,17 @@ def spotifing(sp):
         for feat in item:
             feature_dataframe = feature_dataframe.append(feat, ignore_index=True)
     result = pd.concat([track_dataframe,feature_dataframe], axis = 1)
-    return result.loc[:,['artist_name','track_name','music_preview','image_url','energy', 'valence']]
+    return result.loc[:,['artist_name','track_name','music_preview','image_url', 'valence','energy']]
 
-# sp = initial()
-# print(spotifing(sp))
+
+def ploting(result):
+    print(result)
+    plt.xlabel('Valence')
+    plt.ylabel('Arousal')
+    x1 = result.loc[:,'valence']
+    y1 = result.loc[:,'energy']
+    plt.scatter(x1, y1, s=5, color='red', alpha=0.5, label='angry')
+    plt.show()
+
 # a = sp.recommendation_genre_seeds()
 # pprint.pprint(a)

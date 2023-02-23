@@ -39,6 +39,7 @@ def emotioning(file,client, emotions_position):
     #내분점 도출 함수
     def pointing(emotion):
         result = []
+        print(emotion)
         for n,(k,v) in enumerate(emotion.items()):
             if n == 0:
                 result = emotions_position[k]

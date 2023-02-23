@@ -17,6 +17,7 @@ def sorting(pre_tracklist,result):
         # print(after)
         pre = np.append(pre,pre_tracklist.iloc[i,:])
         pre = np.append(pre,after)
+        print(pre)
         pre_resulting.append(pre.tolist())
     # print(resulting)
     for v in pre_resulting:

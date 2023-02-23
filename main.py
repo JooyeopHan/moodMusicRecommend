@@ -1,6 +1,8 @@
 import pprint
 
 from flask import Flask,request
+from matplotlib import pyplot as plt
+
 import EmotionRecognition
 import Spotify.spotify
 import sortingInterface
@@ -41,7 +43,7 @@ def detecting():
 
     # # 전/ 후 사진으로 추출된 벡터
     result = EmotionRecognition.emotioning(file,client,plane)
-    # print(result)
+    print(result)
     # sp = Spotify.spotify.initial()
     # pre_tracklist = Spotify.spotify.spotifing(sp)
 
@@ -52,13 +54,15 @@ def detecting():
 
 
     resulted = sortingInterface.sorting(pre_tracklist,result[0])
+
     end = {'list': resulted, 'result':[result[1],result[2]]}
+    print(end)
     #result = 10개의 중복되지 않은 [[artist,name],...]
     return end
 
 if __name__ == '__main__':
     sp = Spotify.spotify.initial()
     pre_tracklist = Spotify.spotify.spotifing(sp)
-    print(pre_tracklist)
+    print(pre_tracklist.head())
     client = EmotionRecognition.initial()
     app.run(host='0.0.0.0', port=9000)
