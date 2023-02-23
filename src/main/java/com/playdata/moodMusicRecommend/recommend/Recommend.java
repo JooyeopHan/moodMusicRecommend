@@ -26,6 +26,12 @@ public class Recommend {
     private Double arousal;
 
     private String time;
+    private String img;
 
     private String emotion;
+
+    private String emotionBefore;
+
+    private String musicName;
+    private String artist;
 }

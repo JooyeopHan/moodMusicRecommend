@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playdata.moodMusicRecommend.ResultDTO;
 import com.playdata.moodMusicRecommend.member.Member;
 import com.playdata.moodMusicRecommend.member.MemberRepository;
+import com.playdata.moodMusicRecommend.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -31,7 +33,7 @@ public class RecommendController {
     @Autowired
     MemberRepository memberRepository;
     private final RecommendService service;
-    private final listService listservice;
+    private final MemberService memberservice;
 
     @PostMapping("/music")
     @ResponseBody
@@ -80,11 +82,24 @@ public class RecommendController {
         String testing1 = test.toString();
         System.out.println(testing1);
         System.out.println(testing);
-        boolean result = listservice.testing(testing,user);
+        boolean result = memberservice.testing(testing,user);
 
         // 갱신된 결과 User 저장
 
         dto.setRes(result);
         return ResponseEntity.accepted().headers(headers).body(dto);
+    }
+
+    @PostMapping("/profile")
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<?> showUserMusicList(@AuthenticationPrincipal User user) {
+        HttpHeaders headers = new HttpHeaders();
+        String username = user.getUsername();
+
+        List<Recommend> musicList = service.select(username);
+
+        System.out.println("musicList" +musicList);
+
+        return ResponseEntity.accepted().headers(headers).body(musicList);
     }
 }

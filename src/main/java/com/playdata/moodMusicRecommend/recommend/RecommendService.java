@@ -74,7 +74,7 @@ public class RecommendService {
 
 
             LinkedHashMap music = (LinkedHashMap) musicList.get(iter);
-            System.out.println("audio" + music.get("audio").toString());
+//            System.out.println("audio" + music.get("audio").toString());
             LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분");
             String formatedNow = now.format(formatter);
@@ -84,14 +84,24 @@ public class RecommendService {
             recommend.setValence((Double)music.get("valence"));
             recommend.setUsername(likeList.get("nickname").toString());
             recommend.setEmotion(emotion.get(1).toString());
-            recommend.setAudio(music.get("audio").toString());
+            recommend.setEmotionBefore(emotion.get(0).toString());
+            if(music.get("audio") != null) recommend.setAudio(music.get("audio").toString());
             recommend.setTime(formatedNow);
+            recommend.setImg(music.get("img").toString());
+            recommend.setMusicName(music.get("track").toString());
+            recommend.setArtist(music.get("artist").toString());
 
             this.repository.save(recommend);
         }
 
 
         return "done";
+    }
+
+    public List<Recommend> select(String username){
+        List<Recommend> musicList =  repository.findByUsername(username);
+
+        return musicList;
     }
 
 

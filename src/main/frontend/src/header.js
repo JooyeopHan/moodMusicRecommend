@@ -13,6 +13,8 @@ function Header(){
     const [passwd, setPasswd] = useState('');
     const [auth, setAuth] = useState("");
     const [logIned, setLogIned] = useState(false);
+    const [nickname, setNickname] = useState("");
+    const [email, setEmail] = useState("");
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -47,6 +49,20 @@ function Header(){
         });
     },[])
 
+
+    useEffect(() => {
+            axios.post("/member/profile",).then(
+                (response) => {
+                    console.log(response.data)
+                    console.log(response.data.nickname)
+                    setNickname(response.data.nickname)
+                    setEmail(response.data.email)
+                    console.log(nickname)
+                }
+            ).catch(function(error){
+                // console.log(error.response.data);
+            });
+    },[])
 
     const onLoginHandler = (e) =>{
         e.preventDefault();
@@ -116,7 +132,7 @@ function Header(){
             </Button>
             <Offcanvas show={show} onHide={handleClose} placement="end">
               <Offcanvas.Header closeButton>
-                <Offcanvas.Title>로그인</Offcanvas.Title>
+                <Offcanvas.Title>{!logIned ? '로그인' : nickname+'님 안녕하세요' }</Offcanvas.Title>
               </Offcanvas.Header>
             <Offcanvas.Body>
                 {!logIned ?
@@ -145,14 +161,24 @@ function Header(){
                 </Form>
                   :
                 <Form className="mb-3">
-                    <fieldset>
-                        <Form.Group  className= "mb-3">
+                    <fieldset className='g-5'>
+                        <h5 >
+                            nickname: {nickname}
+                        </h5>
+                        <h5 className="">
+                            Email: {email}
+                        </h5>
+                        <Container fluid className="d-flex flex-row">
+                        <Form.Group className="mx-1">
                             <Button onClick={onLogoutHandler} variant="secondary" size='lg' type="submit">로그아웃</Button>
                         </Form.Group>
-                        <Form.Group onClick={onDeleteHandler} className= "mb-3">
+                        <Form.Group onClick={onDeleteHandler} className= "mx-1">
                             <Button variant="secondary" size='lg' type="submit">회원탈퇴</Button>
                         </Form.Group>
-                        <Button href="/profile" variant="secondary" size = "lg">회원 정보 </Button>
+                            <FormGroup className= "mx-1">
+                        <Button href="/profile" variant="secondary" size ="lg">회원정보</Button>
+                            </FormGroup>
+                        </Container>
                     </fieldset>
                 </Form>
               }
