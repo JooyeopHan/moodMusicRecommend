@@ -118,11 +118,11 @@ export default function Emotion(){
 
 
             <Container className="bg-secondary mt-lg-5 mb-lg-5" style={{borderRadius: '32px',width:'90%', display:'flex',flexDirection:'column', height: 'auto'}}>
-                <h1 className="mx-auto mt-lg-3"> emotion detecting </h1>
+                <h1 className="mx-auto mt-lg-3"> 음악 추천을 위해 표정이 담긴 사진을 업로드 해주세요! </h1>
                 <form onSubmit={SubmitHandler}>
                     <Container fluid className="d-flex">
                         <Container className=" mx-auto mt-5 d-flex flex-column" style={{width:'45%', height:'45%'}}>
-                            <h2 className=" mb-5"> before</h2>
+                            <h2 className=" mb-5"> 현재 감정의 표정 </h2>
                             <img
                                 className="mb-3"
                                 src={imgFile ? imgFile :`asset/blank.png`}
@@ -141,7 +141,7 @@ export default function Emotion(){
                         </Container>
 
                         <Container className="mx-auto mt-5 d-flex flex-column" style={{width:'45%', height:'45%'}}>
-                            <h2 className=" mb-5"> after</h2>
+                            <h2 className=" mb-5"> 변하고 싶은 감정의 표정</h2>
                             <img
                                 className="mb-3"
                                 src={imgFile1 ? imgFile1 :`asset/blank.png`}

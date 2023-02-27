@@ -167,13 +167,14 @@ public class MemberController {
     @CrossOrigin(origins = "*")
     public ResponseEntity<?> showProfile(@AuthenticationPrincipal User user) {
         HttpHeaders headers = new HttpHeaders();
-        String username = user.getUsername();
+        String username = null;
+        if (user != null){
+            username = user.getUsername();
+        }
 
         Optional<Member> profile = memberService.select(username);
 
         profile.ifPresent(System.out::println);
-//        ResultDTO dto = new ResultDTO();
-//        dto.setRes(true);
 
         return ResponseEntity.accepted().headers(headers).body(profile);
     }

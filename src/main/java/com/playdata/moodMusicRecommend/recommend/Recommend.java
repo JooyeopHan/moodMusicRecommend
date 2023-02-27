@@ -32,6 +32,7 @@ public class Recommend {
     private String time;
 
     private String emotion;
+    private String img;
 
     private String emotionBefore;
 

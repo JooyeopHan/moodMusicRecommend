@@ -5,8 +5,7 @@ function Footer(){
     <Container fluid bg='light' style={{ height: "40vh",paddingTop:"5vh", }}>
         
         <Container fluid  style={{fontSize: '1rem', color:'black', textAlign:'center'}}>
-            1조 프로젝트 진행 중입니다.<br />
-            화이팅 합시다.
+            (주)엔코아 Playdata 인공지능 24기 Team SoH 파이널 프로젝트 결과물<br />
         </Container>
       </Container>
     );

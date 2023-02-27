@@ -86,8 +86,9 @@ public class RecommendService {
             recommend.setUsername(likeList.get("nickname").toString());
             recommend.setEmotion(emotion.get(1).toString());
             recommend.setEmotionBefore(emotion.get(0).toString());
-            recommend.setAudio(music.get("audio").toString());
+            if(music.get("audio") != null) recommend.setAudio(music.get("audio").toString());;
             recommend.setTime(formatedNow);
+            recommend.setImg(music.get("img").toString());
             recommend.setMusicName(music.get("track").toString());
             recommend.setArtist(music.get("artist").toString());
 
