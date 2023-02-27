@@ -1,10 +1,9 @@
 import axios from "axios";
 import React from "react";
 import {useEffect, useState, useRef} from "react";
-import {useLocation} from "react-router-dom";
 import { Container,Button } from "react-bootstrap";
-import { BarWave } from "react-cssfx-loading";
 import "../app.css"
+
 
 export default function Emotion(){
     const [imgFile, setImgFile] = useState("");
@@ -15,8 +14,6 @@ export default function Emotion(){
     const imgRef1 = useRef();
     const [isLoading, setIsLoading] = useState(false);
 
-    const location = useLocation();
-
 
     // 이미지 업로드 input의 onChange
     const saveImgFile = () => {
@@ -25,6 +22,8 @@ export default function Emotion(){
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = () => {
+            console.log("file" + file)
+            console.log("reader" + reader)
             console.log("reader_result" + reader.result)
             setImgFile(reader.result);
             setFile1(file);
@@ -62,10 +61,9 @@ export default function Emotion(){
             "Content-Type" : "multipart/form-data"}
     }
 
-    const SubmitHandler  =  async(e) => {
+    const SubmitHandler  = (e) => {
         e.preventDefault()
-
-        console.log("start")
+        console.log("start");
         setIsLoading(true);
         const formData = new FormData();
 
@@ -82,7 +80,7 @@ export default function Emotion(){
                 console.log(data);
                 setIsLoading(false);
                 window.localStorage.setItem("music",data);
-                window.localStorage.setItem("result",result)
+                window.localStorage.setItem("result",result);
                 window.location.href = "/list";
             })
             .catch(function(error){
@@ -110,7 +108,7 @@ export default function Emotion(){
 
 
     return (
-        <Container fluid  style={{backgroundColor:"#44194C", height:"auto", display:'flex', alignItems:'center'}}>{/* This is the modal that is hidden by default */}
+        <Container fluid  style={{background:'linear-gradient(#ff74a4 0%, #9f6ea3 100%)', height:"auto", display:'flex', alignItems:'center'}}>
             <div style={{ display: isLoading ? 'flex' : 'none' }} className='modal'>
                 <div className='modal-content'>
                     <div className='loader'></div>
@@ -118,8 +116,9 @@ export default function Emotion(){
                 </div>
             </div>
 
+
             <Container className="bg-secondary mt-lg-5 mb-lg-5" style={{borderRadius: '32px',width:'90%', display:'flex',flexDirection:'column', height: 'auto'}}>
-                <h1 className="mx-auto"> emotion detecting </h1>
+                <h1 className="mx-auto mt-lg-3"> emotion detecting </h1>
                 <form onSubmit={SubmitHandler}>
                     <Container fluid className="d-flex">
                         <Container className=" mx-auto mt-5 d-flex flex-column" style={{width:'45%', height:'45%'}}>
@@ -134,8 +133,8 @@ export default function Emotion(){
                             <input
                                 type="file"
                                 accept="image/*"
-                                name='file1'
-                                multiple="multiple"
+                                // name='file1'
+                                // multiple="multiple"
                                 onChange={saveImgFile}
                                 ref={imgRef}
                             />
@@ -152,8 +151,8 @@ export default function Emotion(){
                             <input
                                 type="file"
                                 accept="image/*"
-                                name='file2'
-                                multiple="multiple"
+                                // name='file2'
+                                // multiple="multiple"
                                 onChange={saveImgFile1}
                                 ref={imgRef1}
                             />

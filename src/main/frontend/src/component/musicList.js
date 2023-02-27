@@ -1,9 +1,11 @@
-import {Accordion, Button, Collapse, Container, Table} from "react-bootstrap";
+import {Accordion, Button, Form, Container, Table, FormCheck} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {Helmet} from "react-helmet";
 import "./list.css";
 import axios from "axios";
 import qs from "qs";
+
+
 
 export default function MusicList(){
     const itemcss = {
@@ -37,7 +39,6 @@ export default function MusicList(){
         console.log("play"+current);
 
         music.play();
-
         setProup(setInterval(() => {
             console.log("current time ", music.currentTime);
             // console.log("max duration: ", music.duration);
@@ -45,9 +46,8 @@ export default function MusicList(){
             let current_progress = music.currentTime / music.duration * 100;
             // 진행바에 퍼센트 업데이트 쳐준다
             document.getElementById('myBar').style.width = current_progress + '%';
-
             // console.log("current progress ", current_progress);
-        }, 100));
+        }, 50));
     }
 
     const stopping = () => {
@@ -118,9 +118,6 @@ export default function MusicList(){
             'list': list,
             'nickname': nickname
         }
-
-        console.log(axiosBody)
-        console.log(JSON.stringify(axiosBody))
         axios.post("/recommend/list",
             JSON.stringify(axiosBody),
             {
@@ -129,8 +126,14 @@ export default function MusicList(){
             }
         )
             .then((response) => {
-                console.log(response.data);
-            })
+                if (response.data.res) {
+                    const confirm = window.confirm(response.data.msg+'\nemotion 페이지로 이동하시겠습니까?');
+                    if(confirm){
+                        window.location.href = response.data.url;
+                    }else{
+                        window.history.go(0);
+                    }
+                }})
             .catch((error) => {
             });
     }
@@ -148,8 +151,13 @@ export default function MusicList(){
                 <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
             </Helmet>
-
-            <Container fluid className="bg-white mt-lg-5" style={{display:'flex',flexDirection:'row',height: "28%", width:'70%', borderRadius: '32px', boxShadow: '0 6px 15px rgba(0,0,0,0.15)'}}>
+            <Container fluid className="bg-white mt-lg-5" style={{height: "8%", width:'60%', borderRadius: '32px', boxShadow: '0 6px 15px rgba(0,0,0,0.15)'}}>
+                <div className="mt-lg-4" style={{
+                    margin:'auto',
+                    fontSize: "2.5em"
+                }}>{result[0]}-> {result[1]}</div>
+            </Container>
+            <Container fluid className="bg-white mt-lg-3" style={{display:'flex',flexDirection:'row',height: "28%", width:'70%', borderRadius: '32px', boxShadow: '0 6px 15px rgba(0,0,0,0.15)'}}>
                 <img src={allMusic[current].img ? allMusic[current].img : "asset/blank.png"} className="m-4 my-auto" style={{
                     height: "40vh",
                     width: "40vw",
@@ -163,7 +171,7 @@ export default function MusicList(){
                         height: "50%"
                     }}>
                         <div className="mt-lg-4" style={{
-                            fontSize: "3em"
+                            fontSize: "2em"
                         }}>{allMusic[current].track}</div>
                         <p className="mt-3" style={{
                             fontSize: "1.5em"
@@ -225,8 +233,8 @@ export default function MusicList(){
                 })}
                 </tbody>
             </Table>
-            <Container fluid>
-                <Button type='submit' onClick={onSendHandler}>submit</Button>
+            <Container fluid className='mb-lg-5' style={{width:'70%', display:"flex",flexDirection:'row-reverse'}}>
+                <Button type='submit' onClick={onSendHandler}>저장하기</Button>
             </Container>
         </Container>
     );

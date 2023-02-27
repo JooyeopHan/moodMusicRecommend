@@ -7,10 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RecommendRepository extends CrudRepository<Recommend, Long> {
-
-//    // 로그인시 사용자 조회 기능
     List<Recommend> findByUsername(String username);
-//    // 회원 탈퇴
-//    void deleteByNickname(String nickname);
 
 }

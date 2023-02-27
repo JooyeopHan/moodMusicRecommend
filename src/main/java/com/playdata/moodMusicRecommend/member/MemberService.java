@@ -45,8 +45,7 @@ public class MemberService {
     public boolean testing(String test,User user){
 
         Member presentUser;
-        //post JSON.stringfy -> string { 'arousal': } -> '{ \'arousal\' : } <- string
-        // request parsing
+
         JSONObject job = new JSONObject(test);
         JSONArray list = job.getJSONArray("list");
         JSONArray result = job.getJSONArray("result");
@@ -95,15 +94,13 @@ public class MemberService {
             }
         }
 
-        System.out.println(list);
-        System.out.println(result);
-        System.out.println(nickname);
+
         for(int i = 0; i<list.length();i++){
             JSONObject obj = list.getJSONObject(i);
             double valence = obj.getDouble("valence");
             double arousal = obj.getDouble("arousal");
-            result_valence += valence;
-            result_arousal += arousal;
+            result_valence += valence-0.5;
+            result_arousal += arousal-0.5;
         }
         result_valence /= list.length();
         result_arousal /= list.length();
@@ -111,8 +108,7 @@ public class MemberService {
         //happiness 일때 좋아요를 누른 곡의 평균
         means[0] = Math.round(2*result_valence*10000)/10000.0;
         means[1] = Math.round(2*result_arousal*10000)/10000.0;
-        System.out.println(means[0]);
-        System.out.println(means[1]);
+
         // DB 에 보낸다.
         presentUser = mem.get();
         switch (emotion){

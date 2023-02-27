@@ -49,7 +49,8 @@ public class RecommendController {
         WebClient client = WebClient.create();
 
         String result = client.post()
-                .uri("http://localhost:9000/detecting")
+                .uri("http://3.38.211.121:9000/detecting")
+//                .uri("http://localhost:9000/detecting")
                 .bodyValue(builder)
                 .retrieve()
                 .bodyToMono(String.class).block();

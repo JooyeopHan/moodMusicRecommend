@@ -1,17 +1,20 @@
-import {useEffect, useLayoutEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {Button, Navbar, Offcanvas, Form, Container, Nav, FormGroup} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import qs from "qs";
-
+import {useCookies} from "react-cookie";
+import {getCookie} from "react-use-cookie";
 
 function Header(){
+
     const [show, setShow] = useState(false);
     const [username, setUsername] = useState('');
     const [passwd, setPasswd] = useState('');
     const [auth, setAuth] = useState("");
     const [logIned, setLogIned] = useState(false);
-
+    const [nickname, setNickname] = useState("");
+    const [email, setEmail] = useState("");
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -47,6 +50,20 @@ function Header(){
     },[])
 
 
+    useEffect(() => {
+        axios.post("/member/profile",).then(
+            (response) => {
+                console.log(response.data)
+                console.log(response.data.nickname)
+                setNickname(response.data.nickname)
+                setEmail(response.data.email)
+                console.log(nickname)
+            }
+        ).catch(function(error){
+            // console.log(error.response.data);
+        });
+    },[])
+
     const onLoginHandler = (e) =>{
         e.preventDefault();
 
@@ -80,8 +97,8 @@ function Header(){
                 window.alert(response.data.msg);
             })
             .catch((error) => {
-            window.alert('로그아웃 중 에러가 발생했습니다.');
-        });
+                window.alert('로그아웃 중 에러가 발생했습니다.');
+            });
     }
 
     const onDeleteHandler = (e) =>{
@@ -98,65 +115,77 @@ function Header(){
     }
 
 
+
+
     return (
         <Navbar bg="light" expand="lg" style={{height :'15vh', textAlign: 'center', display: 'flex', alignItems:'center',boxShadow: '1px 1px 3px 1px #44194C'}}>
             <Container fluid style={{justifyContent:'around' }}>
-                <Navbar.Brand className="fw-bold" style={{color: 'black', fontSize: '1.5em' }} href="/">Music Recommendation</Navbar.Brand>
+                <Navbar.Brand className="fw-bold" style={{color: 'black', fontSize: '1.5em' }} href="/">Music Recommandation</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Nav className="me-auto">
                     <Link to="/" style={{fontSize: '1.1em', color: 'black', textDecoration: 'none'}}>Home</Link>
-                    <Link to="/emotion" style={{fontSize: '1.1em', color: 'black', textDecoration: 'none'}}>emotion</Link>
+                    <Link to="/emotion" style={{fontSize: '1.1em',marginLeft:"1rem", color: 'black', textDecoration: 'none'}}>emotion</Link>
                 </Nav>
             </Container>
             <Button variant="secondary" onClick={handleShow} className="m-1 mx-lg-4" >
                 Login
             </Button>
             <Offcanvas show={show} onHide={handleClose} placement="end">
-              <Offcanvas.Header closeButton>
-                <Offcanvas.Title>로그인</Offcanvas.Title>
-              </Offcanvas.Header>
-            <Offcanvas.Body>
-              {!logIned ?
-                <Form onSubmit={onLoginHandler}>
-                    <fieldset>
-                        <Form.Group className="mb-3">
-                            <Form.Label htmlFor="username">아이디</Form.Label>
-                            <Form.Control type ="text" onChange = {onUsernameHandler} id="username" value={username}  placeholder="아이디" />
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Label htmlFor="passwd">패스워드</Form.Label>
-                            <Form.Control type = "password" onChange = {onPasswdHandler} id="passwd" value={passwd} placeholder="패스워드" />
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Check
-                                type="checkbox"
-                                id="PwSave"
-                                label="아이디 저장"
-                            />
-                        </Form.Group>
-                        <Form.Group className="d-flex flex-row gap-3 px-3 mt-lg-3" >
-                            <Button variant="secondary" size='lg' type="submit">로그인</Button>
-                            <Link to='/register'><Button variant="secondary" size='lg' type="submit" >회원가입</Button></Link>
-                        </Form.Group>
-                    </fieldset>
-                </Form>
-                  :
-                <Form className="mb-3">
-                    <fieldset>
-                        <Form.Group  className= "mb-3">
-                            <Button onClick={onLogoutHandler} variant="secondary" size='lg' type="submit">로그아웃</Button>
-                        </Form.Group>
-                        <Form.Group onClick={onDeleteHandler} className= "mb-3">
-                            <Button variant="secondary" size='lg' type="submit">회원탈퇴</Button>
-                        </Form.Group>
-                        <Button href="/profile" variant="secondary" size = "lg">회원 정보 </Button>
-                    </fieldset>
-                </Form>
-              }
+                <Offcanvas.Header closeButton>
+                    <Offcanvas.Title>{!logIned ? '로그인' : nickname+'님 안녕하세요' }</Offcanvas.Title>
+                </Offcanvas.Header>
+                <Offcanvas.Body>
+                    {!logIned ?
+                        <Form onSubmit={onLoginHandler}>
+                            <fieldset>
+                                <Form.Group className="mb-3">
+                                    <Form.Label htmlFor="username">아이디</Form.Label>
+                                    <Form.Control type ="text" onChange = {onUsernameHandler} id="username" value={username}  placeholder="아이디" />
+                                </Form.Group>
+                                <Form.Group className="mb-3">
+                                    <Form.Label htmlFor="passwd">패스워드</Form.Label>
+                                    <Form.Control type = "password" onChange = {onPasswdHandler} id="passwd" value={passwd} placeholder="패스워드" />
+                                </Form.Group>
+                                <Form.Group className="mb-3">
+                                    <Form.Check
+                                        type="checkbox"
+                                        id="PwSave"
+                                        label="아이디 저장"
+                                    />
+                                </Form.Group>
+                                <Form.Group className="d-flex flex-row gap-3 px-3 mt-lg-3" >
+                                    <Button variant="secondary" size='lg' type="submit">로그인</Button>
+                                    <Link to='/register'><Button variant="secondary" size='lg' type="submit" >회원가입</Button></Link>
+                                </Form.Group>
+                            </fieldset>
+                        </Form>
+                        :
+                        <Form className="mb-3">
+                            <fieldset className='g-5'>
+                                <h5 >
+                                    nickname: {nickname}
+                                </h5>
+                                <h5 className="">
+                                    Email: {email}
+                                </h5>
+                                <Container fluid className="d-flex flex-row">
+                                    <Form.Group className="mx-1">
+                                        <Button onClick={onLogoutHandler} variant="secondary" size='lg' type="submit">로그아웃</Button>
+                                    </Form.Group>
+                                    <Form.Group onClick={onDeleteHandler} className= "mx-1">
+                                        <Button variant="secondary" size='lg' type="submit">회원탈퇴</Button>
+                                    </Form.Group>
+                                    <FormGroup className= "mx-1">
+                                        <Button href="/profile" variant="secondary" size ="lg">회원정보</Button>
+                                    </FormGroup>
+                                </Container>
+                            </fieldset>
+                        </Form>
+                    }
 
-              </Offcanvas.Body>
+                </Offcanvas.Body>
             </Offcanvas>
-    </Navbar>);
+        </Navbar>);
 }
 
 export default Header
