@@ -51,27 +51,27 @@ export default function Register(){
     }
 
     return (
-    <Container fluid style={{background:'linear-gradient(#ff74a4 0%, #9f6ea3 100%)', height:"150vh",display:'flex',alignItems: 'center'}}>
-        <Container className="bg-secondary" style={{borderRadius: '32px',width:'90%', display:'flex',justifyContent:'center',alignItems: 'center', height: '130vh'}}>
-        <Form className="p-3" onSubmit={onSubmitHandler} style={{ width: '80%',height:'90%', backgroundColor: 'white',borderRadius: '32px'}}>
+    <Container fluid style={{background:'linear-gradient(#ff74a4 0%, #9f6ea3 100%)', height:"120vh",display:'flex',alignItems: 'center'}}>
+        <Container style={{borderRadius: '32px',width:'90%', height: '90vh',display:'flex',justifyContent:'center',alignItems: 'center'}}>
+        <Form className="py-auto mx-auto px-4 my-auto" onSubmit={onSubmitHandler} style={{ textAlign:'center',width: '80%',height:'70%', backgroundColor: 'white',borderRadius: '32px', boxShadow: '0 6px 15px rgba(0,0,0,0.15)'}}>
             <Form.Group className="mb-3 mt-4" id="nickname" >
-                <Form.Label>아이디</Form.Label>
+                <Form.Label><p className='h4'><strong>아이디</strong></p></Form.Label>
                 <Form.Control type="text" onChange = {onNicknameHandler} name="nickname" placeholder="id" />
             </Form.Group>
             <Form.Group className="mb-3" id="email" >
-                <Form.Label>이메일</Form.Label>
+                <Form.Label><p className='h4'><strong>이메일</strong></p></Form.Label>
                 <Form.Control type="email" onChange = {onEmailHandler} placeholder="name@example.com" />
             </Form.Group>
             <Form.Group className="mb-3" id="password1">
-                <Form.Label>비밀번호</Form.Label>
+                <Form.Label><p className='h4'><strong>비밀번호</strong></p></Form.Label>
                 <Form.Control type="password" onChange = {onPassword1Handler} placeholder="password" />
             </Form.Group>
             <Form.Group className="mb-3"  id="password2">
-                <Form.Label>비밀번호 확인</Form.Label>
+                <Form.Label><p className='h4'><strong>비밀번호 확인</strong></p></Form.Label>
                 <Form.Control type="password" onChange = {onPassword2Handler} placeholder="password2" />
             </Form.Group>
             <Form.Group className="mb-3" style={{display:'flex', justifyContent:'flex-end'}}>
-                <Button type="submit" size="lg">회원가입 요청</Button>
+                <Button type="submit" variant='secondary' size="lg">회원가입 요청</Button>
             </Form.Group>
             </Form>
         </Container>

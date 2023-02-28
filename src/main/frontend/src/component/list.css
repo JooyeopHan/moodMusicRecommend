@@ -13,6 +13,12 @@
     --pinkshadow : #ffcbdd;
     --darkwhite : #cecaca;
 }
+
+ .hovered:hover {
+     transform : scale(1.2);
+     transition : all 100ms ease-in;
+ }
+
 /*body {*/
 /*    height: 100vh;*/
 /*    background: linear-gradient(var(--pink) 0%, var(--violet) 100%);*/
