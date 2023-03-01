@@ -106,8 +106,8 @@ public class MemberService {
         result_arousal /= list.length();
 
         //happiness 일때 좋아요를 누른 곡의 평균
-        means[0] = Math.round(2*result_valence*10000)/10000.0;
-        means[1] = Math.round(2*result_arousal*10000)/10000.0;
+        means[0] = 2*Math.round(2*result_valence*10000)/10000.0;
+        means[1] = 2*Math.round(2*result_arousal*10000)/10000.0;
 
         // DB 에 보낸다.
         presentUser = mem.get();

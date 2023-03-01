@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import {useEffect, useState, useRef} from "react";
 import { Container,Button } from "react-bootstrap";
+import { BarWave } from "react-cssfx-loading";
 import "../app.css"
 
 
@@ -27,7 +28,8 @@ export default function Emotion(){
             console.log("reader_result" + reader.result)
             setImgFile(reader.result);
             setFile1(file);
-        };
+
+        }
     };
 
     const saveImgFile1 = () => {
@@ -37,6 +39,7 @@ export default function Emotion(){
         reader.onloadend = () => {
             setImgFile1(reader.result);
             setFile2(file);
+
         };
     };
 
@@ -77,10 +80,12 @@ export default function Emotion(){
             (e) => {
                 const data = JSON.stringify(e.data.list);
                 const result = JSON.stringify(e.data.result);
+                const result2 = JSON.stringify(e.data.after);
                 console.log(data);
                 setIsLoading(false);
                 window.localStorage.setItem("music",data);
                 window.localStorage.setItem("result",result);
+                window.localStorage.setItem("music2",result2);
                 window.location.href = "/list";
             })
             .catch(function(error){
@@ -117,49 +122,53 @@ export default function Emotion(){
             </div>
 
 
-            <Container className="bg-secondary mt-lg-5 mb-lg-5" style={{borderRadius: '32px',width:'90%', display:'flex',flexDirection:'column', height: 'auto'}}>
-                <h1 className="mx-auto mt-lg-3"> 음악 추천을 위해 표정이 담긴 사진을 업로드 해주세요! </h1>
+            <Container className="bg-white mt-lg-5 mb-lg-5" style={{borderRadius: '32px',width:'90%', display:'flex',flexDirection:'column', height: 'auto', boxShadow: '0 6px 15px rgba(0,0,0,0.15)'}}>
+                <p className="h1 mx-auto mt-lg-5"><strong> 음악 추천을 위해 표정이 담긴 사진을 업로드 해주세요! </strong></p>
                 <form onSubmit={SubmitHandler}>
                     <Container fluid className="d-flex">
-                        <Container className=" mx-auto mt-5 d-flex flex-column" style={{width:'45%', height:'45%'}}>
-                            <h2 className=" mb-5"> 현재 감정의 표정 </h2>
+                        <Container className=" mx-auto mt-5 d-flex flex-column" style={{width:'45%', height:'45%',textAlign:'center',justifyContent:'center'}}>
+                            <p className="h2"> 현재 감정 </p>
+                            <p className="h6 text-muted mb-5"> 현재 감정을 나타낼 수 있는 표정을 지어주세요! </p>
                             <img
-                                className="mb-3"
+                                className="mb-3 mx-auto img-thumbnail"
                                 src={imgFile ? imgFile :`asset/blank.png`}
                                 alt="프로필 이미지"
-                                style={{width: '30vw', height: '40vh', borderRadius: '12px'}}
+                                style={{width: '30vw', height: '45vh', borderRadius: '12px', boxShadow: '0 6px 15px rgba(0,0,0,0.15)'}}
                             />
 
                             <input
                                 type="file"
                                 accept="image/*"
-                                // name='file1'
-                                // multiple="multiple"
+                                className='mx-auto mt-3'
+                                name='file'
+                                id='file'
                                 onChange={saveImgFile}
                                 ref={imgRef}
                             />
                         </Container>
 
-                        <Container className="mx-auto mt-5 d-flex flex-column" style={{width:'45%', height:'45%'}}>
-                            <h2 className=" mb-5"> 변하고 싶은 감정의 표정</h2>
+                        <Container className="mx-auto mt-5 d-flex flex-column" style={{width:'45%', height:'45%',textAlign:'center', justifyContent:'center'}}>
+                            <p className="h2"> 변하고 싶은 감정</p>
+                            <p className="h6 text-muted mb-5">변하고 싶은 감정을 나타내는 표정을 지어주세요! </p>
                             <img
-                                className="mb-3"
+                                className="mb-3 mx-auto img-thumbnail"
                                 src={imgFile1 ? imgFile1 :`asset/blank.png`}
                                 alt="프로필 이미지"
-                                style={{width: '30vw', height: '40vh', borderRadius: '12px'}}
+                                style={{width: '30vw', height: '45vh', borderRadius: '12px', boxShadow: '0 6px 15px rgba(0,0,0,0.15)'}}
                             />
                             <input
                                 type="file"
                                 accept="image/*"
-                                // name='file2'
-                                // multiple="multiple"
+                                className='mx-auto mt-3'
                                 onChange={saveImgFile1}
+                                name='file'
+                                id='file'
                                 ref={imgRef1}
                             />
                         </Container>
                     </Container>
-                    <Container fluid className="mx-lg-5 mt-lg-5 mb-lg-5" style={{display:'flex',justifyContent: 'flex-start'}}>
-                        <Button size="lg" type='submit' >start</Button>
+                    <Container fluid className="mt-lg-5 mb-lg-5 d-flex px-lg-5 flex-row-reverse" >
+                        <Button size="lg" type='submit' className='mx-4' >start</Button>
                     </Container>
                 </form>
 

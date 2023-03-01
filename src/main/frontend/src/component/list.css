@@ -9,6 +9,11 @@
     --darkwhite : #cecaca;
 }
 
+.hovered:hover {
+    transform : scale(1.2);
+    transition : all 100ms ease-in;
+}
+
 .controller {
     background: linear-gradient(90deg, var(--pink) 0%, var(--violet) 100%);
     -webkit-background-clip: text;

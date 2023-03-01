@@ -8,16 +8,12 @@ import qs from "qs";
 
 
 export default function MusicList(){
-    const itemcss = {
-        color:'white',
-        height: '10vh',
-        display:'flex',
-        alignItems: 'center'
-    }
+
     const allMusic = JSON.parse(window.localStorage.getItem("music"));
+    // const allMusic = JSON.parse(window.localStorage.getItem("music2"));
     const result = JSON.parse(window.localStorage.getItem("result"));
     console.log(allMusic)
-
+    // console.log(allMusic2)
 
     const [play, setplay] = useState(false);
     const [current,setCurrent] = useState(0);
@@ -142,7 +138,7 @@ export default function MusicList(){
 
 
     return(
-        <Container fluid style={{background: 'linear-gradient(#ff74a4 0%, #9f6ea3 100%)', height:"210vh", width: '100vw',display:'flex',flexDirection:'column',alignItems: 'center'}}>
+        <Container fluid className='pb-5' style={{background: 'linear-gradient(#ff74a4 0%, #9f6ea3 100%)', height:"230vh", width: '100vw',display:'flex',flexDirection:'column',alignItems: 'center'}}>
 
             <Helmet>
                 <meta charSet="utf-8" />
@@ -157,7 +153,7 @@ export default function MusicList(){
                     fontSize: "2.5em"
                 }}>{result[0]}-> {result[1]}</div>
             </Container>
-            <Container fluid className="bg-white mt-lg-3" style={{display:'flex',flexDirection:'row',height: "28%", width:'70%', borderRadius: '32px', boxShadow: '0 6px 15px rgba(0,0,0,0.15)'}}>
+            <Container fluid className="bg-white mt-lg-3 mb-lg-3" style={{display:'flex',flexDirection:'row',height: "28%", width:'70%', borderRadius: '32px', boxShadow: '0 6px 15px rgba(0,0,0,0.15)'}}>
                 <img src={allMusic[current].img ? allMusic[current].img : "asset/blank.png"} className="m-4 my-auto" style={{
                     height: "40vh",
                     width: "40vw",
@@ -206,35 +202,38 @@ export default function MusicList(){
                 </Container>
 
             </Container>
-            <Table hover className="mt-lg-5" style={{width:'80%', height:"70%"}}>
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>artist</th>
-                    <th>track name</th>
-                    <th>like</th>
-                    <th>link</th>
-                </tr>
-                </thead>
-                <tbody>
-                {allMusic.map((m,index)=> {
-                    return(
-                        <tr key={index}>
-                            <td>{index+1}</td>
-                            <td>{m.artist}</td>
-                            <td>{m.track}</td>
-                            <td><input
-                                type="checkbox"
-                                id={`${index}`}
-                                onClick={listClick}
-                            /></td>
-                            <td><Button value={`${index}`} onClick={clickListener}>#</Button></td>
-                        </tr>);
-                })}
-                </tbody>
-            </Table>
-            <Container fluid className='mb-lg-5' style={{width:'70%', display:"flex",flexDirection:'row-reverse'}}>
-                <Button type='submit' onClick={onSendHandler}>저장하기</Button>
+            <Container className="bg-white mt-3 pt-5 pb-5 mb-lg-3" style={{textAlign:'center',color:'black',width:'80%', height:"65%",borderRadius: '32px', boxShadow: '0 6px 15px rgba(0,0,0,0.15)'}}>
+                <Table hover className='mx-auto' style={{width:'98%', height:"95%"}}>
+                    <thead>
+                    <tr>
+                        <th><p className='h6'><strong>index</strong></p></th>
+                        <th><p className='h6'><strong>artist</strong></p></th>
+                        <th><p className='h6'><strong>track name</strong></p></th>
+                        <th><p className='h6'><strong>like</strong></p></th>
+                        <th><p className='h6'><strong>link</strong></p></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {allMusic.map((m,index)=> {
+                        return(
+                            <tr key={index} style={{textAlign:'center',verticalAlign: 'middle'}}>
+                                <td><p className='h6'>{index+1}</p></td>
+                                <td><p className='h6'>{m.artist}</p></td>
+                                <td><p className='h6'>{m.track}</p></td>
+                                <td><input
+                                    type="checkbox"
+                                    id={`${index}`}
+                                    onClick={listClick}
+                                /></td>
+                                <td><Button value={`${index}`} className='hovered' variant='link' style={{ color:"black", textDecoration:'none'}} onClick={clickListener}>play</Button></td>
+                            </tr>);
+                    })}
+                    </tbody>
+                </Table>
+                <Container fluid className='mb-lg-5' style={{width:'100%', display:"flex",flexDirection:'row-reverse'}}>
+                    <Button type='submit' onClick={onSendHandler}>저장하기</Button>
+                </Container>
             </Container>
         </Container>
     );
