@@ -36,11 +36,11 @@ public class RecommendController {
     @ResponseBody
     public String music(MultipartHttpServletRequest mhsr ,@AuthenticationPrincipal User user) throws IOException {
         MultiValueMap<String, Object> builder = new LinkedMultiValueMap<>();
-// decode base64 encoded image data
+
         String file1Data = mhsr.getParameter("file1").substring(22);
         String file2Data = mhsr.getParameter("file2").substring(22);
 
-// create multipart body parts and add them to the builder
+
         builder.add("file1", file1Data);
         builder.add("file2", file2Data);
         Optional<Member> mem = memberRepository.findByNickname(user.getUsername());

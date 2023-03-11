@@ -76,8 +76,6 @@ public class MemberController {
     @CrossOrigin(origins = "*")
     public ResponseEntity<?> signup(@Valid @RequestBody MemberCreateForm memberCreateForm
             , BindingResult bindingResult) throws URISyntaxException {
-        System.out.println(memberCreateForm.getNickname());
-        System.out.println(memberCreateForm.getPassword1());
 
         ResultDTO dto = new ResultDTO();
         //실패시
@@ -145,12 +143,9 @@ public class MemberController {
         ResultDTO dto = new ResultDTO();
         if(user==null) {
             dto.setAuth("ROLE_NO");
-
-            System.out.println("No_role");
         }
         else{
             String auth = user.getAuthorities().toString();
-            System.out.println(user.getAuthorities().toString());
             if (auth.equals("[ROLE_USER]")){
                 dto.setAuth("ROLE_USER");
             } else if (auth.equals("[ROLE_ADMIN]")) {
@@ -159,7 +154,6 @@ public class MemberController {
         }
 
         dto.setRes(true);
-
         return ResponseEntity.accepted().headers(headers).body(dto);
     }
 

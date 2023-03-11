@@ -32,10 +32,6 @@ public class Member {
     @Column(unique = true)
     private String email;
 
-//    @OneToMany
-//    @JoinColumn(name = "RECOMMEND_ID")
-//    private List<Recommend> recommends;
-
     @Column
     @ColumnDefault("-1.0061421315665533")
     private Double angerV;

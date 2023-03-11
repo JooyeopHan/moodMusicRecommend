@@ -23,7 +23,7 @@ public class Recommend {
 
     private String username;
 
-    @Column(unique = true)
+//    @Column(unique = true)
     private String audio;
     private Double valence;
 

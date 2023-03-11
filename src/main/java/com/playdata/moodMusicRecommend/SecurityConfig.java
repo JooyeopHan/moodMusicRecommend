@@ -28,11 +28,6 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception
     {
         http.cors().and().csrf().disable().authorizeHttpRequests()
-//                .antMatchers("/**").permitAll()
-//                .requestMatchers(
-//                new AntPathRequestMatcher("/**")).permitAll()
-//                    .and()
-//                .authorizeRequests()
                     .antMatchers("/emotion/**").authenticated()
                     .anyRequest().permitAll()
                     .and()
