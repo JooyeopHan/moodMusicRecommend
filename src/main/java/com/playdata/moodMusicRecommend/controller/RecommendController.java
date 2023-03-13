@@ -1,14 +1,14 @@
-package com.playdata.moodMusicRecommend.recommend;
+package com.playdata.moodMusicRecommend.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.playdata.moodMusicRecommend.ResultDTO;
-import com.playdata.moodMusicRecommend.member.Member;
-import com.playdata.moodMusicRecommend.member.MemberRepository;
-import com.playdata.moodMusicRecommend.member.MemberService;
+import com.playdata.moodMusicRecommend.model.dto.ResultDTO;
+import com.playdata.moodMusicRecommend.entity.Member;
+import com.playdata.moodMusicRecommend.entity.Recommend;
+import com.playdata.moodMusicRecommend.repository.MemberRepository;
+import com.playdata.moodMusicRecommend.service.MemberService;
+import com.playdata.moodMusicRecommend.service.RecommendService;
 import lombok.RequiredArgsConstructor;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

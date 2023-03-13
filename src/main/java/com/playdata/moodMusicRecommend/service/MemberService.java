@@ -1,5 +1,7 @@
-package com.playdata.moodMusicRecommend.member;
+package com.playdata.moodMusicRecommend.service;
 
+import com.playdata.moodMusicRecommend.entity.Member;
+import com.playdata.moodMusicRecommend.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONArray;
 import org.json.JSONObject;

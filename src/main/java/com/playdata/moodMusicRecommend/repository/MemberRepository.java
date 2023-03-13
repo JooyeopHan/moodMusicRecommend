@@ -1,5 +1,6 @@
-package com.playdata.moodMusicRecommend.member;
+package com.playdata.moodMusicRecommend.repository;
 
+import com.playdata.moodMusicRecommend.entity.Member;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

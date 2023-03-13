@@ -1,14 +1,11 @@
-package com.playdata.moodMusicRecommend.member;
+package com.playdata.moodMusicRecommend.entity;
 
-import com.playdata.moodMusicRecommend.recommend.Recommend;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter

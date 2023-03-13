@@ -1,6 +1,9 @@
-package com.playdata.moodMusicRecommend.member;
+package com.playdata.moodMusicRecommend.service;
 
 
+import com.playdata.moodMusicRecommend.entity.Member;
+import com.playdata.moodMusicRecommend.repository.MemberRepository;
+import com.playdata.moodMusicRecommend.util.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,8 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;

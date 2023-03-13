@@ -1,10 +1,10 @@
-package com.playdata.moodMusicRecommend.recommend;
+package com.playdata.moodMusicRecommend.service;
 
 
-import com.playdata.moodMusicRecommend.member.Member;
+import com.playdata.moodMusicRecommend.entity.Recommend;
+import com.playdata.moodMusicRecommend.repository.RecommendRepository;
 import lombok.RequiredArgsConstructor;
 import org.python.core.PyFunction;
-import org.python.core.PyInteger;
 import org.python.core.PyObject;
 
 import org.python.core.PyString;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.python.util.PythonInterpreter;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 

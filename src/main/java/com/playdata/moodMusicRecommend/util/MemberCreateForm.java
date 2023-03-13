@@ -1,4 +1,4 @@
-package com.playdata.moodMusicRecommend.member;
+package com.playdata.moodMusicRecommend.util;
 
 import lombok.Getter;
 import lombok.Setter;

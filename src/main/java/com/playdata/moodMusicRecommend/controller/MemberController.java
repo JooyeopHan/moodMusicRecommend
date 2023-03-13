@@ -1,6 +1,9 @@
-package com.playdata.moodMusicRecommend.member;
+package com.playdata.moodMusicRecommend.controller;
 
-import com.playdata.moodMusicRecommend.ResultDTO;
+import com.playdata.moodMusicRecommend.model.dto.ResultDTO;
+import com.playdata.moodMusicRecommend.entity.Member;
+import com.playdata.moodMusicRecommend.util.MemberCreateForm;
+import com.playdata.moodMusicRecommend.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
