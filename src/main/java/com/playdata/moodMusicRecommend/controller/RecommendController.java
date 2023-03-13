@@ -49,8 +49,7 @@ public class RecommendController {
         WebClient client = WebClient.create();
 
         String result = client.post()
-                .uri("http://3.38.211.121:9000/detecting")
-//                .uri("http://localhost:9000/detecting")
+                .uri("http://localhost:9000/detecting") // Flask Rest API 요청
                 .bodyValue(builder)
                 .retrieve()
                 .bodyToMono(String.class).block();
@@ -61,7 +60,6 @@ public class RecommendController {
     @PostMapping("/list")
     @ResponseBody
     public ResponseEntity<ResultDTO> Like(@RequestBody Map<String, Object> test, @AuthenticationPrincipal User user) throws JsonProcessingException {
-        System.out.println("recommend/list 접속");
         ResultDTO dto = new ResultDTO();
         HttpHeaders headers = new HttpHeaders();
         dto.setMsg("성공적으로 저장되었습니다.");
@@ -69,10 +67,7 @@ public class RecommendController {
         dto.setUrl("/emotion");
 
         // 데이터 저장
-
         recommendService.create(test);
-
-        System.out.println("성공?");
 
         // 추출된 데이터 기반 갱신
         ObjectMapper mapper = new ObjectMapper();
@@ -83,7 +78,6 @@ public class RecommendController {
         boolean result = memberService.testing(testing, user);
 
         // 갱신된 결과 User 저장
-
         dto.setRes(result);
         return ResponseEntity.accepted().headers(headers).body(dto);
     }
@@ -95,8 +89,6 @@ public class RecommendController {
         String username = user.getUsername();
 
         List<Recommend> musicList = recommendService.select(username);
-
-        System.out.println("musicList" +musicList);
 
         return ResponseEntity.accepted().headers(headers).body(musicList);
     }
